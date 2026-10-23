@@ -1,0 +1,24 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          script: |
+            set -e
+            cd /var/www/cocomarshmallow
+            git pull origin main
+            docker run --rm -v "$PWD":/app -w /app composer:2 install --no-dev --optimize-autoloader --no-interaction
+            docker compose up -d --build
+            docker image prune -f
+            docker builder prune -af
