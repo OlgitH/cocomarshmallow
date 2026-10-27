@@ -28,3 +28,13 @@ jobs:
             docker compose up -d --force-recreate caddy
             docker image prune -f
             docker builder prune -af
+
+      # PHP fatals are served with HTTP 200, so check the body, not just the status.
+      - name: Smoke test
+        run: |
+          sleep 10
+          status=$(curl -sL --max-time 30 -o body.html -w '%{http_code}' https://cocomarshmallow.co.uk/)
+          echo "HTTP $status"
+          if [ "$status" != "200" ] || grep -qiE 'fatal error|critical error|Stack trace|Unable to read' body.html; then
+            echo "Site is serving an error"; head -c 800 body.html; exit 1
+          fi
