@@ -38,6 +38,8 @@
 
   --radius: 1rem;
   --shadow: 0 6px 20px rgb(42 36 48 / 0.12);
+  --arc-down: ellipse(75% 100% at 50% 0);
+  --arc-up: ellipse(75% 100% at 50% 100%);
   --hero-curve: clamp(2.5rem, 9vw, 7rem);
   --gutter: clamp(1rem, 4vw, 2rem);
 }
@@ -146,9 +148,11 @@ main:focus { outline: none; }
 .hero {
   background: var(--pink);
   color: var(--white);
-  padding-block: clamp(2.5rem, 6vw, 4.5rem) calc(var(--hero-curve) + 2rem);
-  border-radius: 0 0 50% 50% / 0 0 var(--hero-curve) var(--hero-curve);
+  padding-block: clamp(2.5rem, 6vw, 4.5rem) 2rem;
+  position: relative;
+  margin-bottom: var(--hero-curve);
 }
+.hero::after { content: ""; position: absolute; top: 100%; left: 0; right: 0; height: var(--hero-curve); background: inherit; clip-path: var(--arc-down); }
 .hero__inner { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem; align-items: center; }
 .hero__kicker {
   display: inline-block; margin: 0 0 1rem; padding: 0.3rem 1rem;
@@ -175,7 +179,8 @@ main:focus { outline: none; }
 .section__title { font-size: clamp(1.8rem, 4vw, 2.6rem); margin: 0; position: relative; padding-bottom: 0.4rem; }
 .section__title::after { content: ""; display: block; width: 4.5rem; height: 6px; margin-top: 0.4rem; border-radius: 6px; background: linear-gradient(90deg, var(--orange) 0 50%, var(--green) 50%); }
 
-.page-hero { background: var(--blue-soft); padding-block: clamp(2rem, 5vw, 3.5rem); border-radius: 0 0 50% 50% / 0 0 2.5rem 2.5rem; }
+.page-hero { background: var(--blue-soft); padding-block: clamp(2rem, 5vw, 3.5rem); position: relative; margin-bottom: 2.5rem; }
+.page-hero::after { content: ""; position: absolute; top: 100%; left: 0; right: 0; height: 2.5rem; background: inherit; clip-path: var(--arc-down); }
 .page-hero--green { background: var(--green); }
 .page-hero__title { font-size: clamp(2rem, 5vw, 3.2rem); margin: 0; }
 .page-hero__lead { margin-top: 1rem; font-size: 1.15rem; }
@@ -312,14 +317,18 @@ input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 3px
 .prose details { border: 2px solid var(--blue); border-radius: 0.8rem; padding: 0.75rem 1.1rem; margin-bottom: 0.75rem; }
 .prose summary { cursor: pointer; font-weight: 700; }
 .prose details[open] summary { margin-bottom: 0.5rem; }
-.cta-band { background: var(--blue); padding-block: clamp(2.5rem, 6vw, 4rem); border-radius: 50% 50% 0 0 / 2.5rem 2.5rem 0 0; margin-top: 2rem; }
+.cta-band { background: var(--blue); padding-block: clamp(2.5rem, 6vw, 4rem); position: relative; margin-top: 4.5rem; }
+.cta-band::before { content: ""; position: absolute; bottom: 100%; left: 0; right: 0; height: 2.5rem; background: inherit; clip-path: var(--arc-up); }
 .cta-band__inner { display: grid; gap: 2rem; align-items: center; }
 .cta-band__media img { display: block; width: min(100%, 16rem); margin-inline: auto; border-radius: var(--radius); box-shadow: var(--shadow); }
 .cta-band h2 { font-size: clamp(1.7rem, 4vw, 2.4rem); }
 @media (min-width: 48em) { .cta-band__inner { grid-template-columns: 16rem 1fr; } }
 
 /* ---- Reviews ------------------------------------------------------------- */
-.section--reviews { background: var(--blue-soft); border-radius: 50% 50% 50% 50% / 2.5rem 2.5rem 2.5rem 2.5rem; margin-top: 2rem; }
+.section--reviews { background: var(--blue-soft); position: relative; margin-block: 4.5rem; }
+.section--reviews::before, .section--reviews::after { content: ""; position: absolute; left: 0; right: 0; height: 2.5rem; background: inherit; }
+.section--reviews::before { bottom: 100%; clip-path: var(--arc-up); }
+.section--reviews::after { top: 100%; clip-path: var(--arc-down); }
 .review-grid { list-style: none; margin: 0; padding: 0; columns: 1; column-gap: 1.5rem; }
 @media (min-width: 40em) { .review-grid { columns: 2; } }
 @media (min-width: 64em) { .review-grid { columns: 3; } }
