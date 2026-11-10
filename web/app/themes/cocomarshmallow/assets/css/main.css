@@ -201,9 +201,9 @@ main:focus { outline: none; }
 .section__title::after { content: ""; display: block; width: 4.5rem; height: 6px; margin-top: 0.4rem; border-radius: 6px; background: linear-gradient(90deg, var(--orange) 0 50%, var(--green) 50%); }
 
 .page-hero {
-  position: relative; display: flex; align-items: flex-end; margin-bottom: 2.5rem; color: var(--white);
+  position: relative; display: flex; align-items: center; margin-bottom: 2.5rem; color: var(--white);
   min-height: clamp(17rem, 30vw, 24rem);
-  padding-block: clamp(8rem, 14vw, 11rem) calc(var(--banner-curve) + 1rem);
+  padding-block: 5rem var(--banner-curve);
   background: var(--blue-soft) url("../img/banner-clean.webp") center / cover no-repeat;
   clip-path: var(--banner-arc);
 }
