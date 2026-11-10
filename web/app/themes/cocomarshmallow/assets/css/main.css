@@ -300,6 +300,32 @@ input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 3px
 .woocommerce table.shop_table th, .woocommerce table.shop_table td { padding: 0.8rem; border-bottom: 1px solid var(--blue); text-align: left; }
 .woocommerce span.onsale { background: var(--orange); color: var(--ink); border-radius: 999px; min-height: auto; min-width: auto; padding: 0.3rem 0.9rem; line-height: 1.4; }
 
+/* Breathing room around WooCommerce buttons (cart, checkout, product) */
+.woocommerce table.cart td.actions { padding: 1.25rem 0.8rem; }
+.woocommerce table.cart td.actions .coupon { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; float: left; }
+.woocommerce table.cart td.actions .coupon .input-text { min-height: 2.75rem; padding: 0.4rem 0.9rem; border: 2px solid var(--ink-soft); border-radius: 999px; font: inherit; width: 12rem; }
+.woocommerce table.cart td.actions > .button { float: right; }
+.woocommerce table.cart td.actions::after { content: ""; display: block; clear: both; }
+@media (max-width: 47.99em) {
+  .woocommerce table.cart td.actions .coupon, .woocommerce table.cart td.actions > .button { float: none; width: 100%; }
+  .woocommerce table.cart td.actions > .button { margin-top: 1rem; }
+}
+.woocommerce .cart-collaterals { margin-top: 2.5rem; }
+.woocommerce .cart-collaterals .cart_totals { float: none; width: 100%; max-width: 32rem; margin-left: auto; }
+.woocommerce .cart-collaterals .cart_totals h2 { margin-bottom: 1rem; }
+.woocommerce .wc-proceed-to-checkout { padding: 1.5rem 0 0; }
+.woocommerce .wc-proceed-to-checkout a.checkout-button { display: flex; width: 100%; margin: 0; padding: 0.9rem 1.6rem; }
+.woocommerce #payment { margin-top: 1.5rem; }
+.woocommerce #payment div.form-row { padding: 1.25rem 0 0; }
+.woocommerce #payment #place_order { width: 100%; margin-top: 1rem; padding: 0.9rem 1.6rem; }
+.woocommerce div.product form.cart { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; margin: 1.75rem 0; }
+.woocommerce div.product form.cart .quantity { margin: 0; }
+.woocommerce-message, .woocommerce-info { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem 1.25rem; }
+.woocommerce-message .button, .woocommerce-info .button { float: none; margin: 0; order: 2; }
+.woocommerce a.button, .woocommerce button.button, .woocommerce input.button { margin-block: 0.25rem; }
+.wc-block-cart__submit-container, .wc-block-components-checkout-place-order-button { margin-top: 1.5rem; }
+.wc-block-components-button:not(.is-link) { padding: 0.8rem 1.6rem; }
+
 /* ---- Motion preferences -------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
