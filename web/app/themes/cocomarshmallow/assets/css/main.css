@@ -415,7 +415,7 @@ input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 3px
 
 /* ---- Star ratings -------------------------------------------------------- */
 .stars { display: inline-flex; gap: 0.1rem; vertical-align: middle; }
-.star { fill: #c77700; stroke: #c77700; stroke-width: 1.2; stroke-linejoin: round; }
+.star { fill: var(--pink); stroke: var(--pink); stroke-width: 1.2; stroke-linejoin: round; }
 .star.is-empty { fill: none; }
 .review__stars { display: flex; margin-bottom: 0.5rem; }
 .reviews__summary { display: flex; align-items: center; gap: 0.6rem; margin: 0; font-weight: 700; }
