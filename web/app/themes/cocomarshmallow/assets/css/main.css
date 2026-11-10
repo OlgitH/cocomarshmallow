@@ -113,14 +113,14 @@ main:focus { outline: none; }
 .site-header__inner { position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 1rem; padding-block: 0.75rem 0; }
 .brand { display: inline-flex; align-items: center; gap: 0.75rem; color: var(--ink); text-decoration: none; }
 .brand:hover { color: var(--pink-dark); }
-.site-header .brand__logo { display: block; width: auto; height: 4.6rem; max-width: 100%; }
-@media (max-width: 600px) { .site-header .brand__logo { height: 4rem; } }
+.site-header .brand__logo { display: block; width: auto; height: 5.8rem; max-width: 100%; }
+@media (max-width: 600px) { .site-header .brand__logo { height: 5rem; } }
 .brand__name { font-size: 1.3rem; font-weight: 700; line-height: 1.1; }
 
 .nav-toggle {
   margin-left: auto;
   display: inline-flex; align-items: center; justify-content: center; min-width: 2.75rem; min-height: 2.75rem; padding: 0.5rem;
-  background: transparent; color: var(--teal); border: 0; border-radius: 0.5rem; cursor: pointer;
+  background: transparent; color: var(--ink); border: 0; border-radius: 0.5rem; cursor: pointer;
 }
 .nav-toggle__label { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .nav-toggle__bars, .nav-toggle__bars::before, .nav-toggle__bars::after {
@@ -140,9 +140,9 @@ main:focus { outline: none; }
 .social--header a { width: 2.5rem; height: 2.5rem; background: var(--teal); }
 .social--header a:hover { background: var(--pink); }
 .primary-nav .menu { list-style: none; margin: 0; padding: 0; }
-.primary-nav a { display: block; padding: 0.7rem 0.25rem; color: var(--teal); font-weight: 700; text-decoration: none; border-bottom: 1px solid var(--blue); }
-.primary-nav a:hover { color: var(--teal-dark); }
-.primary-nav a[aria-current] { color: var(--teal-dark); }
+.primary-nav a { display: block; padding: 0.7rem 0.25rem; color: var(--ink); font-weight: 700; text-decoration: none; border-bottom: 1px solid var(--blue); }
+.primary-nav a:hover { color: var(--pink-dark); }
+.primary-nav a[aria-current] { color: var(--ink); }
 .cart-link { position: relative; display: inline-flex !important; align-items: center; gap: 0.35rem; border-bottom: 0 !important; padding: 0.7rem 0.25rem; }
 .cart-link__count { min-width: 1.4rem; height: 1.4rem; padding: 0 0.3rem; border-radius: 999px; background: var(--pink); color: var(--white); font-size: 0.8rem; line-height: 1.4rem; text-align: center; }
 
@@ -151,13 +151,13 @@ main:focus { outline: none; }
   .primary-nav { display: flex; align-items: center; justify-content: flex-end; width: auto; margin-left: auto; order: 2; padding: 0; }
   .primary-nav .menu { display: flex; flex-wrap: nowrap; justify-content: center; gap: 0.25rem; }
   .site-header__inner { flex-wrap: nowrap; gap: 1.5rem; padding-block: 0.5rem 0; }
-  .site-header .brand__logo { height: 4.1rem; }
+  .site-header .brand__logo { height: 5.4rem; }
   .social--header { order: 3; }
   /* Menu never wraps: main.js sets --nav-scale (<1) only when the full-size menu would not fit on one line */
   .primary-nav a { padding: calc(0.5rem * var(--nav-scale, 1)) calc(0.9rem * var(--nav-scale, 1)); border-bottom: 0; border-radius: 999px; white-space: nowrap; font-size: calc(1.125rem * var(--nav-scale, 1)); }
   .primary-nav { gap: calc(1.25rem * var(--nav-scale, 1)); }
   .brand { flex: none; }
-  .primary-nav a[aria-current] { background: var(--blue-soft); color: var(--teal-dark); }
+  .primary-nav a[aria-current] { background: var(--blue-soft); color: var(--ink); }
 }
 
 /* ---- Hero: solid full-bleed colour, convex curved bottom ------------------ */
@@ -166,6 +166,7 @@ main:focus { outline: none; }
 /* The elliptical clip cuts ~13% of the banner height at the corners, more than --banner-curve on mobile,
    so tuck the pink section further under the (opaque) banner to leave no white gap at the corners. */
 .home-banner + .hero { --tuck: max(var(--banner-curve), 4rem); margin-top: calc(var(--tuck) * -1); padding-top: calc(var(--tuck) + clamp(2.5rem, 6vw, 4.5rem)); }
+.hero.hero--top { padding-top: clamp(8rem, 12vw, 9.5rem); } /* no banner: pink hero starts at the top, under the transparent header */
 .hero {
   background: var(--pink);
   color: var(--white);
@@ -203,15 +204,24 @@ main:focus { outline: none; }
 .page-hero {
   position: relative; display: flex; align-items: center; margin-bottom: 0; color: var(--white);
   min-height: clamp(15rem, 23vw, 34rem);
-  padding-block: 5rem var(--banner-curve);
+  padding-block: 6.5rem var(--banner-curve);
   background: var(--blue-soft) url("../img/banner-clean.webp") right bottom / cover no-repeat;
   clip-path: var(--banner-arc);
 }
+/* Banner version: the white fade behind the logo/menu runs down to the top of the 'Promoting early emotional
+   intelligence' bubble. The bubble sits 14.3% of the image width (width-driven cover) / 42.7% of the banner height
+   (height-driven cover) from the top, so the fade height tracks whichever applies. */
+.page-hero:not(.page-hero--pink) {
+  background:
+    linear-gradient(rgb(255 255 255 / 0.9) 0%, rgb(255 255 255 / 0.6) 55%, rgb(255 255 255 / 0) 100%) top / 100% min(calc(100% - 14.3vw), 42.7%) no-repeat,
+    var(--blue-soft) url("../img/banner-clean.webp") right bottom / cover no-repeat;
+}
+body:has(.page-hero:not(.page-hero--pink)) .site-header { background: transparent; }
 .page-hero > .container { position: relative; }
 .page-hero .rank-math-breadcrumb { display: inline-block; padding: 0.2rem 0.8rem; background: var(--white); color: var(--ink); border-radius: 999px; }
 .page-hero .rank-math-breadcrumb a { color: var(--teal); }
 .page-hero > .container { width: min(100% - 2 * var(--gutter), 74rem); } /* same left edge as the logo on every page */
-.page-hero__title { color: var(--teal); font-weight: 700; }
+.page-hero__title { color: var(--ink); font-weight: 700; }
 .page-hero .entry__meta { display: inline-block; margin-top: 0.5rem; padding: 0.1rem 0.7rem; background: var(--white); color: var(--ink); border-radius: 999px; }
 /* Pink hero (children's activities, nurseries): same look as the home hero */
 .page-hero--pink { display: block; min-height: 0; padding-block: clamp(8rem, 12vw, 9.5rem) calc(var(--banner-curve) + 2rem); background: var(--pink); color: var(--white); clip-path: var(--banner-arc); }
@@ -428,14 +438,14 @@ input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 3px
 @media (forced-colors: active) { .star { fill: CanvasText; stroke: CanvasText; } .star.is-empty { fill: none; } }
 
 /* Pink hero pages: no white fade behind the menu; white links read well on the pink */
-body:has(.page-hero--pink) .site-header { background: transparent; }
-body:has(.page-hero--pink) .nav-toggle { color: var(--white); }
+body:has(:is(.page-hero--pink, .hero--top)) .site-header { background: transparent; }
+body:has(:is(.page-hero--pink, .hero--top)) .nav-toggle { color: var(--white); }
 @media (min-width: 56em) {
-  body:has(.page-hero--pink) .primary-nav a { color: var(--white); }
-  body:has(.page-hero--pink) .primary-nav a[aria-current] { background: rgb(255 255 255 / 0.2); color: var(--white); }
-  body:has(.page-hero--pink) .primary-nav a:hover { color: var(--white); text-decoration: underline; text-underline-offset: 0.3em; }
+  body:has(:is(.page-hero--pink, .hero--top)) .primary-nav a { color: var(--white); }
+  body:has(:is(.page-hero--pink, .hero--top)) .primary-nav a[aria-current] { background: rgb(255 255 255 / 0.2); color: var(--white); }
+  body:has(:is(.page-hero--pink, .hero--top)) .primary-nav a:hover { color: var(--white); text-decoration: underline; text-underline-offset: 0.3em; }
 }
-body:has(.page-hero--pink) .cart-link__count { background: var(--white); color: var(--pink-dark); }
+body:has(:is(.page-hero--pink, .hero--top)) .cart-link__count { background: var(--white); color: var(--pink-dark); }
 
 /* About page: "Follow us" panel on the right */
 .has-aside { display: grid; gap: 2.5rem; align-items: start; }

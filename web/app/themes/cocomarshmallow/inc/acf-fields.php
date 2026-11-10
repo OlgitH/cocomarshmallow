@@ -22,6 +22,21 @@ add_action('acf/init', static function () {
         ]);
     }
 
+    // Page banner on/off (pages only)
+    acf_add_local_field_group([
+        'key'      => 'group_cm_page_banner',
+        'title'    => 'Page banner',
+        'location' => [[['param' => 'post_type', 'operator' => '==', 'value' => 'page']]],
+        'position' => 'side',
+        'fields'   => [
+            ['key' => 'field_cm_show_banner', 'label' => 'Show illustrated banner', 'name' => 'show_banner', 'type' => 'true_false', 'ui' => 1, 'default_value' => 1,
+             'instructions' => 'Off = plain pink header, like the Children’s activities page.'],
+            ['key' => 'field_cm_banner_title', 'label' => 'Banner title (optional)', 'name' => 'banner_title', 'type' => 'text',
+             'instructions' => 'Shown as the heading on the banner. Leave empty to use the page title.',
+             'conditional_logic' => [[['field' => 'field_cm_show_banner', 'operator' => '==', 'value' => '1']]]],
+        ],
+    ]);
+
     // Book details (WooCommerce products)
     acf_add_local_field_group([
         'key'      => 'group_cm_book',
@@ -138,3 +153,11 @@ add_action('save_post', static function ($post_id) {
         update_post_meta($post_id, 'show_in_hero', empty($_POST['show_in_hero']) ? '' : '1');
     }
 });
+
+// The homepage defaults to no banner until someone saves the field (keeps the editor UI in line with cm_show_banner()).
+add_filter('acf/load_value/name=show_banner', static function ($value, $post_id) {
+    if ($value === null && (int) $post_id === (int) get_option('page_on_front')) {
+        return 0;
+    }
+    return $value;
+}, 10, 2);

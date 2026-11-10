@@ -4,7 +4,11 @@ defined('ABSPATH') || exit;
 get_header();
 ?>
 <main id="main" tabindex="-1">
-    <header class="page-hero<?php echo is_product() ? ' page-hero--pink' : ''; ?>">
+    <?php
+    $banner_page = is_shop() ? wc_get_page_id('shop') : (is_page() ? get_the_ID() : 0);
+    $pink_hero   = is_product() || ($banner_page > 0 && !cm_show_banner($banner_page));
+    ?>
+    <header class="page-hero<?php echo $pink_hero ? ' page-hero--pink' : ''; ?>">
         <div class="container container--wide">
             <?php cm_breadcrumbs(); ?>
             <?php $tag = is_product() ? 'p' : 'h1'; // the product template supplies its own H1 ?>

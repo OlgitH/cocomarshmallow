@@ -29,6 +29,18 @@ add_action('wp_head', static function () {
     printf('<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n", esc_url(cm_asset('fonts/caslon-400.woff2')));
 }, 1);
 
+/** Favicon: the "C" from the logo in a crayon circle (used unless a Site Icon is set in the Customizer). */
+add_action('wp_head', static function () {
+    if (has_site_icon()) {
+        return;
+    }
+    $f = static fn (string $file): string => esc_url(cm_asset('img/favicon/' . $file));
+    echo '<link rel="icon" href="' . $f('favicon.ico') . '" sizes="48x48">' . "\n";
+    echo '<link rel="icon" type="image/png" href="' . $f('icon-32.png') . '" sizes="32x32">' . "\n";
+    echo '<link rel="icon" type="image/png" href="' . $f('icon-192.png') . '" sizes="192x192">' . "\n";
+    echo '<link rel="apple-touch-icon" href="' . $f('icon-180.png') . '">' . "\n";
+}, 2);
+
 /** Add aria-current to the active menu link (in addition to WP classes). */
 add_filter('nav_menu_link_attributes', static function ($atts, $item) {
     if (!empty($item->current) || !empty($item->current_item_ancestor)) {
