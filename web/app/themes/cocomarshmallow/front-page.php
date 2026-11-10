@@ -3,13 +3,16 @@
 defined('ABSPATH') || exit;
 get_header();
 
-$hero = cm_hero_product();
+$hero        = cm_hero_product();
+$show_banner = cm_show_banner();
 ?>
 <main id="main" tabindex="-1">
 
+    <?php if ($show_banner) : ?>
     <div class="page-hero home-banner" role="img" aria-label="<?php esc_attr_e('The Adventures of Coco Marshmallow: promoting early emotional intelligence', 'cocomarshmallow'); ?>"></div>
+    <?php endif; ?>
 
-    <section class="hero" aria-labelledby="hero-heading">
+    <section class="hero<?php echo $show_banner ? '' : ' hero--top'; ?>" aria-labelledby="hero-heading">
         <div class="container container--wide hero__inner">
             <div class="hero__text">
                 <h1 id="hero-heading" class="hero__kicker"><?php esc_html_e('Children’s author in Bath', 'cocomarshmallow'); ?></h1>

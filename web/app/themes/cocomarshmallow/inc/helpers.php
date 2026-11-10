@@ -37,6 +37,17 @@ function cm_icon(string $name): string
     return '<svg class="icon icon--' . esc_attr($name) . '" aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">' . $paths[$name] . '</svg>';
 }
 
+/** Whether a page shows the illustrated banner (default yes; the homepage defaults to no until saved). */
+function cm_show_banner($post_id = null): bool
+{
+    $post_id = (int) ($post_id ?: get_the_ID());
+    $raw     = get_post_meta($post_id, 'show_banner', true);
+    if ($raw === '' || $raw === null) {
+        return $post_id !== (int) get_option('page_on_front');
+    }
+    return (bool) (int) $raw;
+}
+
 /** Social links from the Site Settings options page. */
 function cm_social_links(): array
 {

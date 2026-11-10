@@ -4,10 +4,13 @@ get_header();
 while (have_posts()) : the_post(); ?>
 <main id="main" tabindex="-1">
     <article <?php post_class('entry'); ?>>
-        <header class="page-hero">
+        <header class="page-hero<?php echo cm_show_banner() ? '' : ' page-hero--pink'; ?>">
             <div class="container container--narrow">
                 <?php cm_breadcrumbs(); ?>
-                <h1 class="page-hero__title"><?php the_title(); ?></h1>
+                <?php
+                $banner_title = cm_show_banner() ? trim((string) get_post_meta(get_the_ID(), 'banner_title', true)) : '';
+                ?>
+                <h1 class="page-hero__title"><?php echo $banner_title !== '' ? esc_html($banner_title) : get_the_title(); ?></h1>
             </div>
         </header>
         <?php
