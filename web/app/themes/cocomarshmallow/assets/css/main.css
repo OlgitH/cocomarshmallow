@@ -44,6 +44,7 @@
   --arc-up: ellipse(75% 100% at 50% 100%);
   --hero-curve: clamp(2.5rem, 9vw, 7rem);
   --gutter: clamp(1rem, 4vw, 2rem);
+  --banner-size: max(100vw, clamp(68rem, 108vw, 96rem)); /* 4:1 artwork, tall enough to fill the banner */
   --banner-curve: clamp(1.5rem, 5vw, 4rem);
   --banner-arc: ellipse(100% 100% at 50% 0);
 }
@@ -161,7 +162,7 @@ main:focus { outline: none; }
 .home-banner {
   position: relative; z-index: 2;
   height: clamp(16rem, 27vw, 24rem);
-  background: var(--white) url("../img/banner.webp") center top / max(100vw, 96rem) auto no-repeat fixed;
+  background: var(--white) url("../img/banner.webp") right top / var(--banner-size) auto no-repeat fixed;
   clip-path: var(--banner-arc);
 }
 .home-banner + .hero { margin-top: calc(var(--banner-curve) * -1); padding-top: calc(var(--banner-curve) + clamp(2.5rem, 6vw, 4.5rem)); }
@@ -203,7 +204,7 @@ main:focus { outline: none; }
   position: relative; display: flex; align-items: center; margin-bottom: 2.5rem; color: var(--white);
   min-height: clamp(17rem, 30vw, 24rem);
   padding-block: 5rem var(--banner-curve);
-  background: var(--blue-soft) url("../img/banner-clean.webp") center top / max(100vw, 96rem) auto no-repeat fixed;
+  background: var(--blue-soft) url("../img/banner-clean.webp") right top / var(--banner-size) auto no-repeat fixed;
   clip-path: var(--banner-arc);
 }
 .page-hero > .container { position: relative; }
