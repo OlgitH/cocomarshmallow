@@ -10,7 +10,7 @@ while (have_posts()) : the_post(); ?>
                 <h1 class="page-hero__title"><?php the_title(); ?></h1>
             </div>
         </header>
-        <div class="container container--narrow section">
+        <div class="container container--wide section">
             <div class="entry__content prose"><?php the_content(); ?></div>
         </div>
     </article>
