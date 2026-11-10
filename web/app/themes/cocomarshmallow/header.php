@@ -15,12 +15,7 @@ defined('ABSPATH') || exit;
 <header class="site-header" id="top">
     <div class="container container--wide site-header__inner">
         <a class="brand" href="<?php echo esc_url(home_url('/')); ?>" aria-label="<?php echo esc_attr(get_bloginfo('name') . ' – home'); ?>">
-            <?php if (has_custom_logo()) : ?>
-                <?php echo wp_get_attachment_image(get_theme_mod('custom_logo'), 'thumbnail', false, ['class' => 'brand__logo', 'alt' => '']); ?>
-            <?php else : ?>
-                <img class="brand__logo" src="<?php echo esc_url(cm_asset('img/coco.jpg')); ?>" alt="" width="56" height="56">
-            <?php endif; ?>
-            <span class="brand__name"><?php bloginfo('name'); ?></span>
+            <img class="brand__logo" src="<?php echo esc_url(cm_asset('img/logo.jpg')); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>" width="900" height="292">
         </a>
 
         <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">
