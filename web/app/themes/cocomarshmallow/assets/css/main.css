@@ -201,7 +201,7 @@ main:focus { outline: none; }
 
 .page-hero {
   position: relative; display: flex; align-items: center; margin-bottom: 2.5rem; color: var(--white);
-  min-height: clamp(14rem, 20vw, 30rem);
+  min-height: clamp(15rem, 23vw, 34rem);
   padding-block: 5rem var(--banner-curve);
   background: var(--blue-soft) url("../img/banner-clean.webp") right bottom / cover no-repeat;
   clip-path: var(--banner-arc);
