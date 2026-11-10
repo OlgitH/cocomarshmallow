@@ -115,7 +115,7 @@ main:focus { outline: none; }
 
 .nav-toggle {
   display: inline-flex; align-items: center; gap: 0.6rem; min-height: 2.75rem; padding: 0.5rem 1rem;
-  background: var(--white); color: var(--ink); border: 2px solid var(--ink); border-radius: 999px;
+  background: var(--white); color: var(--teal); border: 2px solid var(--teal); border-radius: 999px;
   font: 700 1rem var(--font-serif); cursor: pointer;
 }
 .nav-toggle__bars, .nav-toggle__bars::before, .nav-toggle__bars::after {
