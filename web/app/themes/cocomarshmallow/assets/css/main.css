@@ -546,6 +546,6 @@ body.header-solid .site-header::after {
 
 /* Mobile menu: clear the overhanging logo before the first link */
 @media (max-width: 55.99em) {
-  body.header-solid .nav-open .primary-nav { margin-top: 3.25rem; }
+  body.header-solid.nav-open .primary-nav { margin-top: 3.25rem; background: transparent; box-shadow: none; border-radius: 0; padding-inline: 0; }
 }
 
