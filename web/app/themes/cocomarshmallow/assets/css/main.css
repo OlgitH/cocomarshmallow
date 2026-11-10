@@ -161,8 +161,7 @@ main:focus { outline: none; }
 .home-banner {
   position: relative; z-index: 2;
   height: clamp(16rem, 27vw, 24rem);
-  background: var(--white) url("../img/banner.webp") center bottom / cover no-repeat;
-  padding-top: 0;
+  background: var(--white) url("../img/banner.webp") center top / max(100vw, 96rem) auto no-repeat fixed;
   clip-path: var(--banner-arc);
 }
 .home-banner + .hero { margin-top: calc(var(--banner-curve) * -1); padding-top: calc(var(--banner-curve) + clamp(2.5rem, 6vw, 4.5rem)); }
@@ -204,7 +203,7 @@ main:focus { outline: none; }
   position: relative; display: flex; align-items: center; margin-bottom: 2.5rem; color: var(--white);
   min-height: clamp(17rem, 30vw, 24rem);
   padding-block: 5rem var(--banner-curve);
-  background: var(--blue-soft) url("../img/banner-clean.webp") center / cover no-repeat;
+  background: var(--blue-soft) url("../img/banner-clean.webp") center top / max(100vw, 96rem) auto no-repeat fixed;
   clip-path: var(--banner-arc);
 }
 .page-hero > .container { position: relative; }
@@ -213,7 +212,7 @@ main:focus { outline: none; }
 .page-hero__title { color: var(--teal); }
 .page-hero .entry__meta { display: inline-block; margin-top: 0.5rem; padding: 0.1rem 0.7rem; background: var(--white); color: var(--ink); border-radius: 999px; }
 /* Pink hero (children's activities, nurseries): same look as the home hero */
-.page-hero--pink { display: block; min-height: 0; padding-block: clamp(8rem, 12vw, 9.5rem) calc(var(--banner-curve) + 2rem); background: var(--pink); color: var(--white); clip-path: var(--banner-arc); }
+.page-hero--pink { display: block; background-attachment: scroll; min-height: 0; padding-block: clamp(8rem, 12vw, 9.5rem) calc(var(--banner-curve) + 2rem); background: var(--pink); color: var(--white); clip-path: var(--banner-arc); }
 .page-hero--pink .page-hero__title { color: var(--white); font-size: clamp(2.5rem, 7vw, 4.5rem); }
 .page-hero--pink .page-hero__lead, .page-hero--pink .page-hero__lead a { color: var(--white); }
 .page-hero--pink .rank-math-breadcrumb { background: var(--white); }
