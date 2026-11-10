@@ -175,7 +175,7 @@ main:focus { outline: none; }
   margin-bottom: var(--hero-curve);
 }
 .hero::after { content: ""; position: absolute; top: 100%; left: 0; right: 0; height: var(--hero-curve); background: inherit; clip-path: var(--arc-down); }
-.hero__inner { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem; align-items: center; }
+.hero__inner { display: grid; grid-template-columns: minmax(0, 1fr); gap: 3.5rem; align-items: center; }
 .hero__kicker {
   display: inline-block; margin: 0 0 1rem; padding: 0.3rem 1rem;
   background: var(--white); color: var(--pink-dark); border-radius: 999px;
@@ -453,9 +453,91 @@ body:has(:is(.page-hero--pink, .hero--top)) .cart-link__count { background: var(
 .follow-us__title { font-size: 1.4rem; margin: 0; }
 .follow-us .social { justify-content: center; margin-top: 1rem; }
 @media (min-width: 56em) {
-  .has-aside { grid-template-columns: minmax(0, 1fr) 18rem; gap: 4rem; }
-  .follow-us { position: sticky; top: 2rem; }
+  .has-aside { grid-template-columns: minmax(0, 38em) minmax(0, 1fr); gap: 3.5rem; }
+  .about-side { position: sticky; top: 2rem; }
 }
 
 /* Book details: heading sized like the other inner-page titles */
 .single-product .page-hero--pink .page-hero__title { font-size: clamp(2rem, 5vw, 3.2rem); }
+
+/* About page photo gallery */
+.prose .about-photos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 2rem 0 0; padding: 0; }
+.prose .about-photos figure { margin: 0; }
+.prose .about-photos img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; border-radius: var(--radius); }
+.prose .about-photos figcaption { font-size: 0.9rem; margin-top: 0.4rem; text-align: center; }
+@media (max-width: 30em) { .prose .about-photos { grid-template-columns: 1fr; } }
+
+/* Header style option (Site settings > Appearance): solid white header sits above the banner instead of over it */
+body.header-solid .site-header { position: relative; background: var(--white); padding-bottom: 0.75rem; }
+body.header-solid:has(:is(.page-hero, .hero--top)) .site-header { background: var(--white); }
+body.header-solid .page-hero { padding-top: 2rem; }
+body.header-solid .page-hero--pink, body.header-solid .hero.hero--top { padding-top: 3rem; }
+body.header-solid:has(:is(.page-hero--pink, .hero--top)) .nav-toggle { color: inherit; }
+body.header-solid:has(:is(.page-hero--pink, .hero--top)) .cart-link__count { background: var(--pink-dark); color: var(--white); }
+@media (min-width: 56em) {
+  body.header-solid:has(:is(.page-hero--pink, .hero--top)) .primary-nav a { color: var(--ink); }
+  body.header-solid:has(:is(.page-hero--pink, .hero--top)) .primary-nav a[aria-current] { background: var(--blue-soft); color: var(--ink); }
+  body.header-solid:has(:is(.page-hero--pink, .hero--top)) .primary-nav a:hover { color: var(--pink-dark); }
+}
+body.header-solid .page-hero:not(.page-hero--pink) { background: var(--blue-soft) url("../img/banner-clean.webp") right bottom / cover no-repeat; }
+
+/* About photos: right column, square corners, captions below (never overlaid) */
+.about-side { display: grid; gap: 1.5rem; }
+.about-side .about-photos { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 0; padding: 0; }
+.about-side .about-photos figure, .about-more figure { position: relative; margin: 0; width: 100%; }
+.about-side .about-photos img { width: 100%; height: auto; aspect-ratio: auto; object-fit: cover; display: block; border-radius: 0; }
+.about-side .about-photos figcaption { position: static; background: none; color: var(--ink); padding: 0; margin-top: 0.4rem; font-size: 0.9rem; text-align: left; overflow: visible; max-height: none; }
+@media (min-width: 40em) and (max-width: 56em) { .about-side .about-photos { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+.about-side .about-photos figure { margin: 0; }
+.about-more { padding-top: 0; }
+.about-more__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; }
+.about-more figure { margin: 0; }
+.about-more img { width: 100%; height: auto; display: block; border-radius: 0; }
+.about-more figcaption { margin-top: 0.5rem; font-size: 0.95rem; text-align: center; }
+@media (max-width: 40em) { .about-more__grid { grid-template-columns: 1fr; } }
+/* Two portraits sit side by side in the right column */
+.about-side .about-photos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+.about-side .about-photos img { aspect-ratio: 4 / 5; }
+.about-side .about-photos figcaption { font-size: 0.8rem; }
+.about-more figcaption, .about-side .about-photos figcaption { text-align: left; }
+.about-side .about-photos figcaption { font-size: 0.95rem; }
+@media (min-width: 56em) { .has-aside .entry__content { max-width: 38em; } }
+
+/* Solid header: logo is taller than the bar and overhangs onto the banner below */
+body.header-solid .site-header { z-index: 30; }
+body.header-solid .site-header .brand { position: relative; z-index: 2; height: 4rem; align-items: flex-start; }
+body.header-solid .site-header .brand__logo { height: 6.4rem; max-width: none; }
+@media (min-width: 56em) {
+  body.header-solid .site-header .brand { height: 4.5rem; }
+  body.header-solid .site-header .brand__logo { height: 7.4rem; }
+}
+/* Shorter solid header bar (logo size mostly kept, so it overhangs more) */
+body.header-solid .site-header { padding-bottom: 0.4rem; }
+body.header-solid .site-header__inner { padding-block: 0.4rem 0; }
+body.header-solid .site-header .brand { height: 3rem; }
+body.header-solid .site-header .brand__logo { height: 5.6rem; }
+@media (min-width: 56em) {
+  body.header-solid .site-header .brand { height: 3.2rem; }
+  body.header-solid .site-header .brand__logo { height: 6.6rem; }
+}
+/* Clear the overhanging logo */
+body.header-solid .page-hero { padding-top: 5rem; }
+body.header-solid .page-hero--pink, body.header-solid .hero.hero--top { padding-top: 6rem; }
+/* More room above the hero text, less below */
+body.header-solid .page-hero { padding-top: 6rem; }
+body.header-solid .page-hero--pink, body.header-solid .hero.hero--top { padding-top: 7rem; }
+body.header-solid .page-hero--pink { padding-bottom: calc(var(--banner-curve) + 0.5rem); }
+
+/* Solid header: hand-drawn, wobbly bottom edge instead of a straight line */
+body.header-solid .site-header::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 0.9rem; margin-top: -1px; z-index: 1; pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 20' preserveAspectRatio='none'%3E%3Cpath fill='%23fff' d='M0 0H1200V9C1150 11.6 1110 6.5 1040 8.2S930 13.2 860 9.9 790 5.6 700 9 640 12.4 560 8.2 470 4.8 390 9 330 14 250 10.7 170 5.6 100 9 30 11.6 0 8.2Z'/%3E%3C/svg%3E") center top / 100% 100% no-repeat;
+}
+
+/* Banner / hero bottom edge: keeps the general convex curve, with a gentle hand-drawn wobble along it */
+.page-hero, .page-hero--pink {
+  clip-path: none;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 100' preserveAspectRatio='none'%3E%3Cpath fill='%23000' d='M0 0H1200V86.85L1180 87.74L1160 88.62L1140 89.48L1120 90.32L1100 91.14L1080 91.94L1060 92.7L1040 93.42L1020 94.1L1000 94.74L980 95.33L960 95.87L940 96.35L920 96.79L900 97.18L880 97.52L860 97.82L840 98.09L820 98.33L800 98.54L780 98.73L760 98.91L740 99.07L720 99.23L700 99.36L680 99.49L660 99.6L640 99.69L620 99.76L600 99.8L580 99.81L560 99.78L540 99.72L520 99.62L500 99.48L480 99.3L460 99.09L440 98.84L420 98.57L400 98.26L380 97.94L360 97.6L340 97.24L320 96.87L300 96.49L280 96.1L260 95.7L240 95.28L220 94.84L200 94.37L180 93.87L160 93.34L140 92.77L120 92.15L100 91.49L80 90.77L60 90.01L40 89.19L20 88.33L0 87.42Z'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 100' preserveAspectRatio='none'%3E%3Cpath fill='%23000' d='M0 0H1200V86.85L1180 87.74L1160 88.62L1140 89.48L1120 90.32L1100 91.14L1080 91.94L1060 92.7L1040 93.42L1020 94.1L1000 94.74L980 95.33L960 95.87L940 96.35L920 96.79L900 97.18L880 97.52L860 97.82L840 98.09L820 98.33L800 98.54L780 98.73L760 98.91L740 99.07L720 99.23L700 99.36L680 99.49L660 99.6L640 99.69L620 99.76L600 99.8L580 99.81L560 99.78L540 99.72L520 99.62L500 99.48L480 99.3L460 99.09L440 98.84L420 98.57L400 98.26L380 97.94L360 97.6L340 97.24L320 96.87L300 96.49L280 96.1L260 95.7L240 95.28L220 94.84L200 94.37L180 93.87L160 93.34L140 92.77L120 92.15L100 91.49L80 90.77L60 90.01L40 89.19L20 88.33L0 87.42Z'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat;
+}

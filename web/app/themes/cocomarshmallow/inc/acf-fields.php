@@ -89,6 +89,9 @@ add_action('acf/init', static function () {
         'title'    => 'Site settings',
         'location' => [[['param' => 'options_page', 'operator' => '==', 'value' => 'cm-site-settings']]],
         'fields'   => [
+            ['key' => 'field_cm_tab_appearance', 'label' => 'Appearance', 'type' => 'tab'],
+            ['key' => 'field_cm_header_style', 'label' => 'Header style', 'name' => 'header_style', 'type' => 'select', 'default_value' => 'solid',
+                'choices' => ['solid' => 'Solid white header', 'fade' => 'Transparent header fading over the banner'], 'return_format' => 'value'],
             ['key' => 'field_cm_tab_contact', 'label' => 'Contact', 'type' => 'tab'],
             ['key' => 'field_cm_contact_email', 'label' => 'Email', 'name' => 'contact_email', 'type' => 'email'],
             ['key' => 'field_cm_contact_location', 'label' => 'Location', 'name' => 'contact_location', 'type' => 'text', 'default_value' => 'Bath, Somerset'],
