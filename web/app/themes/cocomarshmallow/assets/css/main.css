@@ -230,6 +230,8 @@ main:focus { outline: none; }
 .entry__meta { color: var(--ink-soft); margin: 0.5rem 0 0; }
 .entry__figure { margin: 0 0 2rem; }
 .entry__figure img { border-radius: var(--radius); }
+.entry > .section { padding-top: 0.5rem; }
+.entry .entry__content { max-width: 30em; font-size: clamp(1.2rem, 2.2vw, 1.4rem); line-height: 1.6; } /* roughly ten words a line */
 .prose > :last-child { margin-bottom: 0; }
 .prose h2 { margin-top: 1.6em; }
 .prose img { border-radius: var(--radius); }

@@ -11,7 +11,7 @@ while (have_posts()) : the_post(); ?>
                 <p class="entry__meta"><time datetime="<?php echo esc_attr(get_the_date('c')); ?>"><?php echo esc_html(get_the_date()); ?></time></p>
             </div>
         </header>
-        <div class="container container--narrow section">
+        <div class="container container--wide section">
             <?php if (has_post_thumbnail()) : ?><figure class="entry__figure"><?php the_post_thumbnail('large'); ?></figure><?php endif; ?>
             <div class="entry__content prose"><?php the_content(); ?></div>
             <nav class="post-nav" aria-label="<?php esc_attr_e('Post navigation', 'cocomarshmallow'); ?>">
