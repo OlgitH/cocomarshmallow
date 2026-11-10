@@ -21,6 +21,8 @@
 }
 
 :root {
+  --teal: #1d6a45;
+  --teal-dark: #134a30;
   --pink: #d80f4a;          /* strong pink: hero, primary buttons (white text 5.3:1) */
   --pink-dark: #a80b3a;     /* hover / pink text on white (7.6:1) */
   --orange: #f5a03a;        /* accent: decoration, never small text on white */
@@ -130,9 +132,9 @@ main:focus { outline: none; }
 .primary-nav { display: none; flex-basis: 100%; padding-top: 0.5rem; }
 .nav-open .primary-nav { display: block; }
 .primary-nav .menu { list-style: none; margin: 0; padding: 0; }
-.primary-nav a { display: block; padding: 0.7rem 0.25rem; color: var(--ink); font-weight: 700; text-decoration: none; border-bottom: 1px solid var(--blue); }
-.primary-nav a:hover { color: var(--pink-dark); }
-.primary-nav a[aria-current] { color: var(--pink-dark); }
+.primary-nav a { display: block; padding: 0.7rem 0.25rem; color: var(--teal); font-weight: 700; text-decoration: none; border-bottom: 1px solid var(--blue); }
+.primary-nav a:hover { color: var(--teal-dark); }
+.primary-nav a[aria-current] { color: var(--teal-dark); }
 .cart-link { position: relative; display: inline-flex !important; align-items: center; gap: 0.35rem; border-bottom: 0 !important; padding: 0.7rem 0.25rem; }
 .cart-link__count { min-width: 1.4rem; height: 1.4rem; padding: 0 0.3rem; border-radius: 999px; background: var(--pink); color: var(--white); font-size: 0.8rem; line-height: 1.4rem; text-align: center; }
 
@@ -142,7 +144,7 @@ main:focus { outline: none; }
   .primary-nav .menu { display: flex; gap: 0.25rem; }
   .primary-nav a { padding: 0.5rem 0.9rem; border-bottom: 0; border-radius: 999px; }
   .primary-nav a:hover { background: var(--blue-soft); }
-  .primary-nav a[aria-current] { background: var(--green); color: var(--ink); }
+  .primary-nav a[aria-current] { background: var(--blue-soft); color: var(--teal-dark); }
 }
 
 /* ---- Hero: solid full-bleed colour, convex curved bottom ------------------ */
