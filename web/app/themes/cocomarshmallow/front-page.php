@@ -7,6 +7,8 @@ $hero = cm_hero_product();
 ?>
 <main id="main" tabindex="-1">
 
+    <div class="home-banner" role="img" aria-label="<?php esc_attr_e('The Adventures of Coco Marshmallow: promoting early emotional intelligence', 'cocomarshmallow'); ?>"></div>
+
     <section class="hero" aria-labelledby="hero-heading">
         <div class="container container--wide hero__inner">
             <div class="hero__text">

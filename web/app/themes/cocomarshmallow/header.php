@@ -23,6 +23,21 @@ defined('ABSPATH') || exit;
             <span class="nav-toggle__label"><?php esc_html_e('Menu', 'cocomarshmallow'); ?></span>
         </button>
 
+        <?php
+        $header_socials = array_filter(cm_social_links(), static fn ($s) => in_array($s['key'], ['instagram', 'facebook'], true));
+        if ($header_socials) : ?>
+            <ul class="social social--header" aria-label="<?php esc_attr_e('Follow us', 'cocomarshmallow'); ?>">
+                <?php foreach ($header_socials as $s) : ?>
+                    <li>
+                        <a href="<?php echo esc_url($s['url']); ?>" rel="noopener me" target="_blank">
+                            <?php echo cm_icon($s['key']); ?>
+                            <span class="screen-reader-text"><?php echo esc_html($s['label']); ?> <?php esc_html_e('(opens in a new tab)', 'cocomarshmallow'); ?></span>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
+
         <nav class="primary-nav" id="primary-nav" aria-label="<?php esc_attr_e('Primary', 'cocomarshmallow'); ?>">
             <?php
             wp_nav_menu([
