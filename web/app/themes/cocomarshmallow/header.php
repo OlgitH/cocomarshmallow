@@ -15,13 +15,28 @@ defined('ABSPATH') || exit;
 <header class="site-header" id="top">
     <div class="container container--wide site-header__inner">
         <a class="brand" href="<?php echo esc_url(home_url('/')); ?>" aria-label="<?php echo esc_attr(get_bloginfo('name') . ' – home'); ?>">
-            <img class="brand__logo" src="<?php echo esc_url(cm_asset('img/logo.jpg')); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>" width="1200" height="374">
+            <img class="brand__logo" src="<?php echo esc_url(cm_asset('img/logo.png')); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>" width="720" height="224">
         </a>
 
         <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">
             <span class="nav-toggle__bars" aria-hidden="true"></span>
             <span class="nav-toggle__label"><?php esc_html_e('Menu', 'cocomarshmallow'); ?></span>
         </button>
+
+        <?php
+        $header_socials = array_filter(cm_social_links(), static fn ($s) => in_array($s['key'], ['instagram', 'facebook'], true));
+        if ($header_socials) : ?>
+            <ul class="social social--header" aria-label="<?php esc_attr_e('Follow us', 'cocomarshmallow'); ?>">
+                <?php foreach ($header_socials as $s) : ?>
+                    <li>
+                        <a href="<?php echo esc_url($s['url']); ?>" rel="noopener me" target="_blank">
+                            <?php echo cm_icon($s['key']); ?>
+                            <span class="screen-reader-text"><?php echo esc_html($s['label']); ?> <?php esc_html_e('(opens in a new tab)', 'cocomarshmallow'); ?></span>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
 
         <nav class="primary-nav" id="primary-nav" aria-label="<?php esc_attr_e('Primary', 'cocomarshmallow'); ?>">
             <?php

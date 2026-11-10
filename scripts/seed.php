@@ -43,7 +43,6 @@ $home    = cm_seed_page('home', 'Home');
 $about   = cm_seed_page('about', 'About', <<<HTML
 <!-- wp:paragraph --><p>Hello, I’m Lysha, a children’s author based in Bath. I write gentle, funny picture books that help little ones name and understand their big feelings.</p><!-- /wp:paragraph -->
 <!-- wp:paragraph --><p>The Adventures of Coco Marshmallow follow a curious cat through everyday emotions, with a simple mindfulness activity in every book so families can explore each feeling together. Illustrations are by Amy Chandler.</p><!-- /wp:paragraph -->
-<!-- wp:paragraph --><p><em>This is placeholder text. Please replace it with your own story.</em></p><!-- /wp:paragraph -->
 HTML);
 $act     = cm_seed_page('childrens-activities', 'Children’s activities', '<!-- wp:paragraph --><p>Printable colouring sheets, mindfulness cards and more to enjoy with Coco Marshmallow. Download, print and play!</p><!-- /wp:paragraph -->');
 $news    = cm_seed_page('news-events', 'News & events');
