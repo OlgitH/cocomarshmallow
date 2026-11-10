@@ -204,16 +204,23 @@ main:focus { outline: none; }
   position: relative; display: flex; align-items: flex-end; margin-bottom: 2.5rem; color: var(--white);
   min-height: clamp(17rem, 30vw, 24rem);
   padding-block: clamp(8rem, 14vw, 11rem) calc(var(--banner-curve) + 1rem);
-  background: var(--teal-dark) url("../img/banner.webp") center / cover no-repeat;
+  background: var(--blue-soft) url("../img/banner-clean.webp") center / cover no-repeat;
   clip-path: var(--banner-arc);
 }
-.page-hero::before { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgb(10 30 20 / 0.7), rgb(10 30 20 / 0) 70%); pointer-events: none; }
 .page-hero > .container { position: relative; }
-.page-hero a { color: var(--white); }
-.page-hero .rank-math-breadcrumb { color: var(--white); }
-.page-hero .rank-math-breadcrumb a { color: var(--white); }
-.page-hero__title, .page-hero__lead, .page-hero .entry__meta { color: var(--white); text-shadow: 0 2px 10px rgb(0 0 0 / 0.55); }
-.page-hero .entry__meta { margin-top: 0.5rem; }
+.page-hero .rank-math-breadcrumb { display: inline-block; padding: 0.2rem 0.8rem; background: var(--white); color: var(--ink); border-radius: 999px; }
+.page-hero .rank-math-breadcrumb a { color: var(--pink-dark); }
+.page-hero__title { display: inline-block; padding: 0.15em 0.55em 0.2em; background: var(--pink); color: var(--white); border-radius: 0.5rem; }
+.page-hero .entry__meta { display: inline-block; margin-top: 0.5rem; padding: 0.1rem 0.7rem; background: var(--white); color: var(--ink); border-radius: 999px; }
+/* Pink hero (children's activities, nurseries): same look as the home hero */
+.page-hero--pink { display: block; min-height: 0; padding-block: clamp(8rem, 12vw, 9.5rem) calc(var(--banner-curve) + 2rem); background: var(--pink); color: var(--white); clip-path: var(--banner-arc); }
+.page-hero--pink .page-hero__title { padding: 0; background: none; border-radius: 0; font-size: clamp(2.5rem, 7vw, 4.5rem); }
+.page-hero--pink .page-hero__lead, .page-hero--pink .page-hero__lead a { color: var(--white); }
+.page-hero--pink .rank-math-breadcrumb { background: var(--white); }
+.page-hero--pink .button { background: var(--white); border-color: var(--white); color: var(--pink-dark); }
+.page-hero--pink .button--outline { background: transparent; color: var(--white); }
+.page-hero--pink :focus-visible { outline-color: var(--white); box-shadow: 0 0 0 6px var(--pink-dark); }
+.page-hero--pink .page-hero__art { box-shadow: 0 14px 40px rgb(0 0 0 / 0.25); transform: rotate(2deg); }
 .page-hero__title { font-size: clamp(2rem, 5vw, 3.2rem); margin: 0; }
 .page-hero__lead { margin-top: 1rem; font-size: 1.15rem; }
 .page-hero__split { display: grid; gap: 2rem; align-items: center; }

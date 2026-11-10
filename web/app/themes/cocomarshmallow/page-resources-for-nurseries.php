@@ -10,7 +10,7 @@ $book = cm_hero_product();
 ?>
 <main id="main" tabindex="-1">
     <?php while (have_posts()) : the_post(); ?>
-    <header class="page-hero page-hero--green">
+    <header class="page-hero page-hero--pink">
         <div class="container container--wide page-hero__split">
             <div>
                 <?php cm_breadcrumbs(); ?>
