@@ -107,12 +107,12 @@ main:focus { outline: none; }
 .text-link { font-weight: 700; }
 
 /* ---- Header -------------------------------------------------------------- */
-.site-header { position: absolute; top: 0; left: 0; right: 0; z-index: 20; background: linear-gradient(to bottom, var(--white) 0%, var(--white) 65%, rgb(255 255 255 / 0) 100%); padding-bottom: 2.5rem; }
+.site-header { position: absolute; top: 0; left: 0; right: 0; z-index: 20; background: linear-gradient(to bottom, var(--white) 0%, var(--white) 65%, rgb(255 255 255 / 0) 100%); padding-bottom: 1.5rem; }
 .admin-bar .site-header { top: 0; }
 .site-header__inner { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; padding-block: 0.75rem 0; text-align: center; }
 .brand { display: inline-flex; align-items: center; gap: 0.75rem; color: var(--ink); text-decoration: none; }
 .brand:hover { color: var(--pink-dark); }
-.site-header .brand__logo { display: block; mix-blend-mode: multiply; width: auto; height: 5rem; max-width: 100%; }
+.site-header .brand__logo { display: block; mix-blend-mode: multiply; width: auto; height: 4rem; max-width: 100%; }
 @media (max-width: 600px) { .site-header .brand__logo { height: 3.5rem; } }
 .brand__name { font-size: 1.3rem; font-weight: 700; line-height: 1.1; }
 
@@ -158,8 +158,9 @@ main:focus { outline: none; }
 /* ---- Hero: solid full-bleed colour, convex curved bottom ------------------ */
 .home-banner {
   position: relative; z-index: 2;
-  height: clamp(22rem, 40vw, 36rem);
-  background: var(--white) url("../img/banner.webp") 28% center / cover no-repeat;
+  height: clamp(16rem, 27vw, 24rem);
+  background: var(--white) url("../img/banner.webp") center bottom / cover no-repeat;
+  padding-top: 0;
   clip-path: var(--banner-arc);
 }
 .home-banner + .hero { margin-top: calc(var(--banner-curve) * -1); padding-top: calc(var(--banner-curve) + clamp(2.5rem, 6vw, 4.5rem)); }
