@@ -62,5 +62,7 @@ add_filter('body_class', static function ($classes) {
     if (is_front_page()) {
         $classes[] = 'has-hero';
     }
+    $style = cm_field('header_style', 'option');
+    $classes[] = $style === 'fade' ? 'header-fade' : 'header-solid';
     return $classes;
 });

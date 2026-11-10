@@ -18,9 +18,39 @@ while (have_posts()) : the_post(); ?>
             ? array_filter(cm_social_links(), static fn ($s) => in_array($s['key'], ['instagram', 'facebook'], true))
             : [];
         ?>
-        <div class="container container--wide section<?php echo $follow ? ' has-aside' : ''; ?>">
-            <div class="entry__content prose"><?php the_content(); ?></div>
-            <?php if ($follow) : ?>
+        <?php $is_about = is_page('about'); ?>
+        <div class="container container--wide section<?php echo $is_about ? ' has-aside' : ''; ?>">
+            <?php
+            // About page: pull the photo gallery out of the copy and show it in the right-hand column.
+            $photos = '';
+            $more = '';
+            if ($is_about) {
+                $kept = [];
+                foreach (parse_blocks(get_the_content()) as $block) {
+                    if (($block['blockName'] ?? '') === 'core/gallery' && str_contains($block['attrs']['className'] ?? '', 'about-photos')) {
+                        // Individual portraits go in the right column; the rest in a section below.
+                        foreach ($block['innerBlocks'] as $img) {
+                            $file = basename((string) get_attached_file((int) ($img['attrs']['id'] ?? 0)));
+                            if (str_starts_with($file, 'about-story-time') || str_starts_with($file, 'about-illustration')) {
+                                $photos .= render_block($img);
+                            } else {
+                                $more .= render_block($img);
+                            }
+                        }
+                    } else {
+                        $kept[] = $block;
+                    }
+                }
+                $body = apply_filters('the_content', serialize_blocks($kept));
+            } else {
+                $body = apply_filters('the_content', get_the_content());
+            }
+            ?>
+            <div class="entry__content prose"><?php echo $body; ?></div>
+            <?php if ($is_about) : ?>
+                <div class="about-side">
+                    <div class="about-photos"><?php echo $photos; ?></div>
+                    <?php if ($follow) : ?>
                 <aside class="follow-us" aria-labelledby="follow-us-heading">
                     <h2 id="follow-us-heading" class="follow-us__title"><?php esc_html_e('Follow us on socials', 'cocomarshmallow'); ?></h2>
                     <ul class="social" role="list">
@@ -34,8 +64,15 @@ while (have_posts()) : the_post(); ?>
                         <?php endforeach; ?>
                     </ul>
                 </aside>
+                    <?php endif; ?>
+                </div>
             <?php endif; ?>
         </div>
+        <?php if (!empty($more)) : ?>
+            <section class="container container--wide section about-more" aria-label="<?php esc_attr_e('More photos', 'cocomarshmallow'); ?>">
+                <div class="about-more__grid"><?php echo $more; ?></div>
+            </section>
+        <?php endif; ?>
     </article>
 </main>
 <?php endwhile;
