@@ -252,13 +252,17 @@ input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 3px
 .site-footer { margin-top: 3rem; background: var(--blue-soft); border-top: 6px solid var(--blue); }
 .site-footer__grid { display: grid; gap: 2rem; padding-block: 3rem; }
 @media (min-width: 48em) { .site-footer__grid { grid-template-columns: 1.4fr 1fr 1fr; } }
-.footer-title { font-size: 1.2rem; }
+.footer-title { font-size: 1.2rem; margin-bottom: 1rem; }
+.footer-col p { margin: 0 0 1.25rem; }
+.footer-address { margin-bottom: 1.5rem; font-style: normal; line-height: 1.7; }
+.footer-col .button { margin-top: 0.5rem; }
+.footer-menu a { display: inline-block; padding-block: 0.2rem; }
 .footer-menu, .legal-menu, .social { list-style: none; margin: 0; padding: 0; }
-.footer-menu li { margin-bottom: 0.4rem; }
-.social { display: flex; gap: 0.75rem; margin-top: 1rem; }
+.footer-menu li { margin-bottom: 0.6rem; }
+.social { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-top: 1.5rem; }
 .social a { display: inline-flex; align-items: center; justify-content: center; width: 2.75rem; height: 2.75rem; border-radius: 50%; background: var(--ink); color: var(--white); transition: background 0.15s; }
 .social a:hover { background: var(--pink); color: var(--white); }
-.site-footer__legal { background: var(--ink); color: var(--white); padding-block: 1rem; font-size: 0.95rem; }
+.site-footer__legal { background: var(--ink); color: var(--white); padding-block: 1.5rem; font-size: 0.95rem; }
 .site-footer__legal a { color: var(--white); }
 .site-footer__legal a:hover { color: var(--green); }
 .site-footer__legal-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 2rem; }
