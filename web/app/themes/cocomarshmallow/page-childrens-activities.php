@@ -13,15 +13,20 @@ get_header();
             <div>
                 <?php cm_breadcrumbs(); ?>
                 <h1 class="page-hero__title"><?php the_title(); ?></h1>
-                <div class="page-hero__lead prose"><?php the_content(); ?></div>
+                <div class="page-hero__lead prose"><?php echo trim((string) cm_field('act_intro')) !== '' ? wp_kses_post(apply_filters('the_content', cm_field('act_intro'))) : apply_filters('the_content', get_the_content()); ?></div>
             </div>
+            <?php $act_img = (int) cm_field('act_image'); ?>
+            <?php if ($act_img) : ?>
+                <?php echo wp_get_attachment_image($act_img, 'large', false, ['class' => 'page-hero__art', 'loading' => 'eager']); ?>
+            <?php else : ?>
             <img class="page-hero__art" src="<?php echo esc_url(cm_asset('img/meadow-scene.jpg')); ?>" width="480" height="456" loading="eager" alt="<?php esc_attr_e('An illustrated meadow with a squirrel, a hare, a mouse holding acorns and birds in the sunshine', 'cocomarshmallow'); ?>">
+            <?php endif; ?>
         </div>
     </header>
-    <?php endwhile; ?>
+    <?php $act_page_id = get_the_ID(); endwhile; ?>
 
     <section class="section container container--wide" aria-labelledby="downloads-heading">
-        <h2 id="downloads-heading" class="section__title"><?php esc_html_e('Free downloads', 'cocomarshmallow'); ?></h2>
+        <h2 id="downloads-heading" class="section__title"><?php echo esc_html(trim((string) cm_field('act_heading', $act_page_id)) ?: 'Free downloads'); ?></h2>
         <?php
         $activities = new WP_Query(['post_type' => 'cm_activity', 'posts_per_page' => -1, 'orderby' => ['menu_order' => 'ASC', 'date' => 'DESC']]);
         if ($activities->have_posts()) : ?>
@@ -60,8 +65,9 @@ get_header();
                 <?php endwhile; wp_reset_postdata(); ?>
             </ul>
         <?php else : ?>
-            <p><?php esc_html_e('Activities are coming soon. Check back shortly!', 'cocomarshmallow'); ?></p>
+            <p><?php echo esc_html(trim((string) cm_field('act_empty', $act_page_id)) ?: 'Activities are coming soon. Check back shortly!'); ?></p>
         <?php endif; ?>
     </section>
+    <?php cm_render_sections($act_page_id); ?>
 </main>
 <?php get_footer();

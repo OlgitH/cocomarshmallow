@@ -3,7 +3,7 @@
     <div class="container container--wide site-footer__grid">
         <section class="footer-col footer-col--about" aria-labelledby="footer-about">
             <h2 id="footer-about" class="footer-title"><?php bloginfo('name'); ?></h2>
-            <p><?php echo esc_html(get_bloginfo('description') ?: 'Gentle, joyful picture books that help little ones understand their feelings. Written and illustrated in Bath.'); ?></p>
+            <p><?php echo esc_html(trim((string) cm_field('footer_blurb', 'option')) ?: get_bloginfo('description') ?: 'Gentle, joyful picture books that help little ones understand their feelings. Written and illustrated in Bath.'); ?></p>
             <?php $socials = cm_social_links(); ?>
             <?php if ($socials) : ?>
                 <ul class="social" aria-label="<?php esc_attr_e('Follow us', 'cocomarshmallow'); ?>">

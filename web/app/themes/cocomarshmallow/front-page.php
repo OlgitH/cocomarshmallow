@@ -5,6 +5,7 @@ get_header();
 
 $hero        = cm_hero_product();
 $show_banner = cm_show_banner();
+$t = static fn (string $key, string $default) => trim((string) cm_field($key)) !== '' ? trim((string) cm_field($key)) : $default;
 ?>
 <main id="main" tabindex="-1">
 
@@ -15,12 +16,12 @@ $show_banner = cm_show_banner();
     <section class="hero<?php echo $show_banner ? '' : ' hero--top'; ?>" aria-labelledby="hero-heading">
         <div class="container container--wide hero__inner">
             <div class="hero__text">
-                <h1 id="hero-heading" class="hero__kicker"><?php esc_html_e('Children’s author in Bath', 'cocomarshmallow'); ?></h1>
+                <h1 id="hero-heading" class="hero__kicker"><?php echo esc_html($t('home_kicker', 'Children’s author in Bath')); ?></h1>
                 <?php if ($hero) :
                     $hid   = $hero->get_id();
                     $blurb = cm_field('book_blurb', $hid) ?: wp_strip_all_tags($hero->get_short_description());
                     ?>
-                    <p class="hero__label"><?php esc_html_e('Latest book', 'cocomarshmallow'); ?></p>
+                    <p class="hero__label"><?php echo esc_html($t('home_latest_label', 'Latest book')); ?></p>
                     <h2 class="hero__title"><?php echo esc_html($hero->get_name()); ?></h2>
                     <?php if ($blurb) : ?><p class="hero__blurb"><?php echo wp_kses_post(nl2br(esc_html($blurb))); ?></p><?php endif; ?>
                     <p class="hero__actions">
@@ -32,7 +33,7 @@ $show_banner = cm_show_banner();
                         </a>
                     </p>
                 <?php else : ?>
-                    <p class="hero__label"><?php esc_html_e('Latest book', 'cocomarshmallow'); ?></p>
+                    <p class="hero__label"><?php echo esc_html($t('home_latest_label', 'Latest book')); ?></p>
                     <h2 class="hero__title">Happiness</h2>
                     <p class="hero__blurb"><?php esc_html_e('Join Coco Marshmallow on a gentle adventure to discover what happiness feels like, with a fun mindfulness activity inside.', 'cocomarshmallow'); ?></p>
                     <p class="hero__actions"><a class="button button--light" href="<?php echo esc_url(home_url('/books/')); ?>"><?php esc_html_e('Buy now', 'cocomarshmallow'); ?></a></p>
@@ -56,8 +57,8 @@ $show_banner = cm_show_banner();
     <section class="section section--white" aria-labelledby="featured-heading">
         <div class="container container--wide">
             <header class="section__header">
-                <h2 id="featured-heading" class="section__title"><?php esc_html_e('Featured books', 'cocomarshmallow'); ?></h2>
-                <a class="text-link" href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/books/')); ?>"><?php esc_html_e('See all books', 'cocomarshmallow'); ?><span aria-hidden="true"> →</span></a>
+                <h2 id="featured-heading" class="section__title"><?php echo esc_html($t('home_featured_heading', 'Featured books')); ?></h2>
+                <a class="text-link" href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/books/')); ?>"><?php echo esc_html($t('home_featured_link', 'See all books')); ?><span aria-hidden="true"> →</span></a>
             </header>
             <?php
             $featured = function_exists('wc_get_products') ? wc_get_products(['limit' => 4, 'status' => 'publish', 'featured' => true, 'orderby' => 'date', 'order' => 'DESC']) : [];
@@ -81,7 +82,7 @@ $show_banner = cm_show_banner();
     <section class="section section--reviews" aria-labelledby="reviews-heading">
         <div class="container container--wide">
             <header class="section__header">
-                <h2 id="reviews-heading" class="section__title"><?php esc_html_e('What our readers say', 'cocomarshmallow'); ?></h2>
+                <h2 id="reviews-heading" class="section__title"><?php echo esc_html($t('home_reviews_heading', 'What our readers say')); ?></h2>
                 <?php
                 $ratings = array_filter(array_map(static fn ($r) => (float) (cm_field('review_rating', $r->ID) ?: 5), $reviews->posts));
                 $avg     = $ratings ? array_sum($ratings) / count($ratings) : 0;
@@ -121,6 +122,8 @@ $show_banner = cm_show_banner();
         </div>
     </section>
     <?php endif; ?>
+
+    <?php cm_render_sections(); ?>
 
 </main>
 <?php get_footer();
