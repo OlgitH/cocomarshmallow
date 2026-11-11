@@ -37,6 +37,30 @@ add_action('acf/init', static function () {
         ],
     ]);
 
+    // About page content (attached to the page with the slug "about")
+    $about = get_page_by_path('about');
+    if ($about) {
+        $photo_fields = static fn (string $prefix) => [
+            ['key' => "field_cm_{$prefix}_image", 'label' => 'Photo', 'name' => 'image', 'type' => 'image', 'return_format' => 'id', 'preview_size' => 'medium', 'required' => 1, 'wrapper' => ['width' => '40']],
+            ['key' => "field_cm_{$prefix}_caption", 'label' => 'Caption', 'name' => 'caption', 'type' => 'text', 'wrapper' => ['width' => '60']],
+        ];
+        acf_add_local_field_group([
+            'key'      => 'group_cm_about',
+            'title'    => 'About page content',
+            'location' => [[['param' => 'page', 'operator' => '==', 'value' => (string) $about->ID]]],
+            'position' => 'acf_after_title',
+            'hide_on_screen' => ['the_content'],
+            'fields'   => [
+                ['key' => 'field_cm_about_intro', 'label' => 'Story text', 'name' => 'about_intro', 'type' => 'wysiwyg', 'tabs' => 'all', 'toolbar' => 'basic', 'media_upload' => 0,
+                 'instructions' => 'The main text on the About page.'],
+                ['key' => 'field_cm_about_photos', 'label' => 'Photos beside the text', 'name' => 'about_photos', 'type' => 'repeater', 'layout' => 'block', 'button_label' => 'Add photo',
+                 'instructions' => 'Shown in the right-hand column (stacked on mobile).', 'sub_fields' => $photo_fields('about_photo')],
+                ['key' => 'field_cm_about_more', 'label' => 'More photos', 'name' => 'about_more_photos', 'type' => 'repeater', 'layout' => 'block', 'button_label' => 'Add photo',
+                 'instructions' => 'Shown in a larger grid below the text.', 'sub_fields' => $photo_fields('about_more')],
+            ],
+        ]);
+    }
+
     // Book details (WooCommerce products)
     acf_add_local_field_group([
         'key'      => 'group_cm_book',

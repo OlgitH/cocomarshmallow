@@ -24,7 +24,27 @@ while (have_posts()) : the_post(); ?>
             // About page: pull the photo gallery out of the copy and show it in the right-hand column.
             $photos = '';
             $more = '';
-            if ($is_about) {
+            $about_intro = $is_about ? trim((string) cm_field('about_intro')) : '';
+            $render_photos = static function ($rows): string {
+                $out = '';
+                foreach ((array) $rows as $row) {
+                    $id = (int) ($row['image'] ?? 0);
+                    if (!$id) {
+                        continue;
+                    }
+                    $caption = trim((string) ($row['caption'] ?? ''));
+                    $out .= '<figure class="wp-block-image">' . wp_get_attachment_image($id, 'large')
+                        . ($caption !== '' ? '<figcaption class="wp-element-caption">' . esc_html($caption) . '</figcaption>' : '') . '</figure>';
+                }
+                return $out;
+            };
+            if ($is_about && $about_intro !== '') {
+                // Content comes from the ACF fields (About page content).
+                $photos = $render_photos(cm_field('about_photos'));
+                $more = $render_photos(cm_field('about_more_photos'));
+                $body = apply_filters('the_content', $about_intro);
+            } elseif ($is_about) {
+                // Fallback: legacy editor content with a gallery block.
                 $kept = [];
                 foreach (parse_blocks(get_the_content()) as $block) {
                     if (($block['blockName'] ?? '') === 'core/gallery' && str_contains($block['attrs']['className'] ?? '', 'about-photos')) {
