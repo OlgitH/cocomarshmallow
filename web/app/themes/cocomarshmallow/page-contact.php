@@ -16,14 +16,14 @@ $loc    = cm_field('contact_location', 'option') ?: 'Bath, Somerset';
     </header>
     <div class="container container--wide section contact-layout">
         <div class="prose">
-            <?php the_content(); ?>
+            <?php echo trim((string) cm_field('contact_intro')) !== '' ? wp_kses_post(apply_filters('the_content', cm_field('contact_intro'))) : apply_filters('the_content', get_the_content()); ?>
             <p><strong><?php esc_html_e('Based in', 'cocomarshmallow'); ?></strong> <?php echo esc_html($loc); ?></p>
             <?php if ($mail) : ?><p><a href="mailto:<?php echo esc_attr(antispambot($mail)); ?>"><?php echo esc_html(antispambot($mail)); ?></a></p><?php endif; ?>
         </div>
 
         <form id="contact-form" class="form" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" novalidate>
             <?php if ($status === 'sent') : ?>
-                <p class="notice notice--success" role="status"><?php esc_html_e('Thank you! Your message has been sent.', 'cocomarshmallow'); ?></p>
+                <p class="notice notice--success" role="status"><?php echo esc_html(trim((string) cm_field('contact_thanks')) ?: __('Thank you! Your message has been sent.', 'cocomarshmallow')); ?></p>
             <?php elseif ($status) : ?>
                 <p class="notice notice--error" role="alert">
                     <?php echo esc_html($status === 'invalid' ? __('Please fill in your name, a valid email address and a message.', 'cocomarshmallow') : __('Sorry, something went wrong sending your message. Please try again.', 'cocomarshmallow')); ?>
@@ -50,6 +50,6 @@ $loc    = cm_field('contact_location', 'option') ?: 'Bath, Somerset';
             <button class="button" type="submit"><?php esc_html_e('Send message', 'cocomarshmallow'); ?></button>
         </form>
     </div>
-    <?php endwhile; ?>
+    <?php cm_render_sections(); endwhile; ?>
 </main>
 <?php get_footer();

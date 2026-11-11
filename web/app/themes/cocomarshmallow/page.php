@@ -18,7 +18,8 @@ while (have_posts()) : the_post(); ?>
             ? array_filter(cm_social_links(), static fn ($s) => in_array($s['key'], ['instagram', 'facebook'], true))
             : [];
         ?>
-        <?php $is_about = is_page('about'); ?>
+        <?php $is_about = is_page('about'); $has_sections = !$is_about && !empty(cm_field('page_sections')); ?>
+        <?php if ($has_sections) : cm_render_sections(); else : ?>
         <div class="container container--wide section<?php echo $is_about ? ' has-aside' : ''; ?>">
             <?php
             // About page: pull the photo gallery out of the copy and show it in the right-hand column.
@@ -88,6 +89,7 @@ while (have_posts()) : the_post(); ?>
                 </div>
             <?php endif; ?>
         </div>
+        <?php endif; /* sections vs content */ ?>
         <?php if (!empty($more)) : ?>
             <section class="container container--wide section about-more" aria-label="<?php esc_attr_e('More photos', 'cocomarshmallow'); ?>">
                 <div class="about-more__grid"><?php echo $more; ?></div>

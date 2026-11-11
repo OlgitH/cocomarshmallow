@@ -116,6 +116,8 @@ add_action('acf/init', static function () {
             ['key' => 'field_cm_tab_appearance', 'label' => 'Appearance', 'type' => 'tab'],
             ['key' => 'field_cm_header_style', 'label' => 'Header style', 'name' => 'header_style', 'type' => 'select', 'default_value' => 'solid',
                 'choices' => ['solid' => 'Solid white header', 'fade' => 'Transparent header fading over the banner'], 'return_format' => 'value'],
+            ['key' => 'field_cm_footer_blurb', 'label' => 'Footer description', 'name' => 'footer_blurb', 'type' => 'textarea', 'rows' => 3, 'new_lines' => '',
+                'instructions' => 'Short text in the footer. Leave empty to use the site tagline.'],
             ['key' => 'field_cm_tab_contact', 'label' => 'Contact', 'type' => 'tab'],
             ['key' => 'field_cm_contact_email', 'label' => 'Email', 'name' => 'contact_email', 'type' => 'email'],
             ['key' => 'field_cm_contact_location', 'label' => 'Location', 'name' => 'contact_location', 'type' => 'text', 'default_value' => 'Bath, Somerset'],

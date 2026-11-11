@@ -549,3 +549,20 @@ body.header-solid .site-header::after {
   body.header-solid.nav-open .primary-nav { margin-top: 3.25rem; background: transparent; box-shadow: none; border-radius: 0; padding-inline: 0; }
 }
 
+
+/* Flexible page sections (ACF) */
+.flex-section__title { margin-top: 0; }
+.flex-section__split { display: grid; gap: 2rem; align-items: center; }
+.flex-section__media img { display: block; width: 100%; height: auto; border-radius: var(--radius); }
+@media (min-width: 48em) {
+  .flex-section__split { grid-template-columns: 1fr 1fr; gap: 3rem; }
+  .flex-section__split--left .flex-section__media { order: -1; }
+}
+.flex-gallery { list-style: none; margin: 1.5rem 0 0; padding: 0; display: grid; gap: 1.5rem; grid-template-columns: 1fr; }
+.flex-gallery figure { margin: 0; }
+.flex-gallery img { display: block; width: 100%; height: auto; border-radius: var(--radius); }
+.flex-gallery figcaption { margin-top: 0.4rem; font-size: 0.95rem; }
+@media (min-width: 40em) { .flex-gallery--2, .flex-gallery--3, .flex-gallery--4 { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 64em) { .flex-gallery--3 { grid-template-columns: repeat(3, 1fr); } .flex-gallery--4 { grid-template-columns: repeat(4, 1fr); } }
+.cta-band--simple .cta-band__inner, .cta-band--simple > .container { display: block; }
+.text-center { text-align: center; }
