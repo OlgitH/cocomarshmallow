@@ -102,6 +102,7 @@ function cm_follow_us(string $class = ''): string
     if (!$links) {
         return '';
     }
+    usort($links, static fn ($a, $b) => ($a['key'] === 'facebook' ? 0 : 1) <=> ($b['key'] === 'facebook' ? 0 : 1)); // Facebook first
     $labels  = array_column($links, 'label');
     $heading = sprintf(__('Follow us on %s', 'cocomarshmallow'), implode(__(' and ', 'cocomarshmallow'), $labels));
     $id      = wp_unique_id('follow-');
