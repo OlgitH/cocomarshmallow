@@ -32,7 +32,7 @@
                 <span><?php echo esc_html($loc); ?></span><br>
                 <?php if ($mail) : ?><a href="mailto:<?php echo esc_attr(antispambot($mail)); ?>"><?php echo esc_html(antispambot($mail)); ?></a><?php endif; ?>
             </address>
-            <p><a class="button button--small" href="<?php echo esc_url(home_url('/contact/')); ?>"><?php esc_html_e('Send a message', 'cocomarshmallow'); ?></a></p>
+            <p><a class="button button--small" href="<?php echo esc_url(home_url('/contact/')); ?>"><?php esc_html_e('Send a message', 'cocomarshmallow'); ?></a> <?php echo cm_mailing_list_button('button button--small button--ghost'); ?></p>
         </section>
     </div>
 

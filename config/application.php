@@ -163,7 +163,7 @@ foreach ([
     'STRIPE_TEST_MODE', 'STRIPE_PUBLISHABLE_KEY', 'STRIPE_SECRET_KEY', 'STRIPE_WEBHOOK_SECRET',
     'STRIPE_TEST_PUBLISHABLE_KEY', 'STRIPE_TEST_SECRET_KEY', 'STRIPE_TEST_WEBHOOK_SECRET',
     'SMTP_HOST', 'SMTP_PORT', 'SMTP_USER', 'SMTP_PASSWORD', 'SMTP_SECURE', 'MAIL_FROM_ADDRESS', 'MAIL_FROM_NAME',
-    'CONTACT_FORM_RECIPIENT',
+    'CONTACT_FORM_RECIPIENT', 'EMAILOCTOPUS_API_KEY',
 ] as $integration_key) {
     $integration_value = env($integration_key);
     if ($integration_value !== null && $integration_value !== '') {

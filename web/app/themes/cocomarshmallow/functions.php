@@ -13,4 +13,5 @@ require_once __DIR__ . '/inc/post-types.php';
 require_once __DIR__ . '/inc/acf-fields.php';
 require_once __DIR__ . '/inc/acf-pages.php';
 require_once __DIR__ . '/inc/contact-form.php';
+require_once __DIR__ . '/inc/downloads.php';
 require_once __DIR__ . '/inc/woocommerce.php';

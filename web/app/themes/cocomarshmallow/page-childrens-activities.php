@@ -27,6 +27,56 @@ get_header();
 
     <section class="section container container--wide" aria-labelledby="downloads-heading">
         <h2 id="downloads-heading" class="section__title"><?php echo esc_html(trim((string) cm_field('act_heading', $act_page_id)) ?: 'Free downloads'); ?></h2>
+        <?php $mb = cm_mailing_list_button(); if ($mb) : ?><p class="downloads-join"><?php esc_html_e('Want to hear about new activities and books?', 'cocomarshmallow'); ?> <?php echo $mb; ?></p><?php endif; ?>
+        <?php
+        $get_id = absint($_GET['get'] ?? 0);
+        $got_id = absint($_GET['cm_got'] ?? 0);
+        $dl_err = sanitize_key($_GET['cm_dl_error'] ?? '');
+        $valid  = static fn (int $i) => $i && get_post_type($i) === 'cm_activity' && cm_activity_file_url($i) !== '';
+        if ($got_id && cm_has_download_access() && $valid($got_id)) : ?>
+            <div id="download-ready" class="download-panel download-panel--ready" role="status" tabindex="-1">
+                <h3><?php esc_html_e('Thank you! Your download is ready.', 'cocomarshmallow'); ?></h3>
+                <p>
+                    <a class="button" href="<?php echo esc_url(cm_activity_file_url($got_id)); ?>" download>
+                        <?php echo cm_icon('download'); ?><span><?php echo esc_html(sprintf(__('Download %s', 'cocomarshmallow'), get_the_title($got_id))); ?></span>
+                    </a>
+                    <?php echo cm_mailing_list_button(); ?>
+                </p>
+            </div>
+        <?php elseif ($get_id && !cm_has_download_access() && $valid($get_id)) : ?>
+            <form id="download-form" class="form download-panel" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" novalidate>
+                <h3><?php echo esc_html(sprintf(__('Get “%s”', 'cocomarshmallow'), get_the_title($get_id))); ?></h3>
+                <p><?php esc_html_e('Pop in your name and email and your download will be ready straight away.', 'cocomarshmallow'); ?></p>
+                <?php if ($dl_err) : ?>
+                    <p class="notice notice--error" role="alert"><?php echo esc_html($dl_err === 'invalid' ? __('Please enter your name and a valid email address.', 'cocomarshmallow') : __('Sorry, something went wrong. Please try again.', 'cocomarshmallow')); ?></p>
+                <?php endif; ?>
+                <input type="hidden" name="action" value="cm_download">
+                <input type="hidden" name="cm_activity" value="<?php echo esc_attr($get_id); ?>">
+                <?php wp_nonce_field('cm_download', 'cm_dl_nonce'); ?>
+                <div class="form__row">
+                    <label for="cm_dl_name"><?php esc_html_e('Your name', 'cocomarshmallow'); ?> <span class="req" aria-hidden="true">*</span></label>
+                    <input type="text" id="cm_dl_name" name="cm_dl_name" autocomplete="name" required aria-required="true">
+                </div>
+                <div class="form__row">
+                    <label for="cm_dl_email"><?php esc_html_e('Email address', 'cocomarshmallow'); ?> <span class="req" aria-hidden="true">*</span></label>
+                    <input type="email" id="cm_dl_email" name="cm_dl_email" autocomplete="email" required aria-required="true">
+                </div>
+                <div class="form__row form__row--check">
+                    <label><input type="checkbox" name="cm_dl_join" value="1"> <?php esc_html_e('Yes, please add me to the mailing list for news about new books and activities.', 'cocomarshmallow'); ?></label>
+                </div>
+                <div class="form__hp" aria-hidden="true">
+                    <label for="cm_website_dl">Leave this field empty</label>
+                    <input type="text" id="cm_website_dl" name="cm_website" tabindex="-1" autocomplete="off">
+                </div>
+                <p class="form__note"><?php
+                    $privacy = get_privacy_policy_url();
+                    echo $privacy
+                        ? wp_kses_post(sprintf(__('We’ll only use your details to send you this download, and to email you news if you tick the box. See our <a href="%s">privacy policy</a>.', 'cocomarshmallow'), esc_url($privacy)))
+                        : esc_html__('We’ll only use your details to send you this download, and to email you news if you tick the box.', 'cocomarshmallow'); ?></p>
+                <button class="button" type="submit"><?php esc_html_e('Get my download', 'cocomarshmallow'); ?></button>
+                <a class="button button--outline" href="<?php echo esc_url(get_permalink($act_page_id)); ?>"><?php esc_html_e('Cancel', 'cocomarshmallow'); ?></a>
+            </form>
+        <?php endif; ?>
         <?php
         $activities = new WP_Query(['post_type' => 'cm_activity', 'posts_per_page' => -1, 'orderby' => ['menu_order' => 'ASC', 'date' => 'DESC']]);
         // Group by activity type: "Colouring sheets" gets its own tab, everything else is under "Activities".
@@ -74,8 +124,9 @@ get_header();
                                             </p>
                                         <?php endif; ?>
                                         <div class="activity-card__text"><?php echo wp_kses_post(get_the_excerpt() ?: wp_trim_words(get_the_content(), 30)); ?></div>
-                                        <?php if ($url) : ?>
-                                            <a class="button" href="<?php echo esc_url($url); ?>" download>
+                                        <?php if ($url) :
+                                            $href = cm_has_download_access() ? $url : add_query_arg('get', get_the_ID(), get_permalink($act_page_id)) . '#download-form'; ?>
+                                            <a class="button" href="<?php echo esc_url($href); ?>"<?php echo cm_has_download_access() ? ' download' : ''; ?>>
                                                 <?php echo cm_icon('download'); ?>
                                                 <span><?php esc_html_e('Download', 'cocomarshmallow'); ?><span class="screen-reader-text"> <?php the_title(); ?> (<?php echo esc_html(cm_file_meta($file_id)); ?>)</span></span>
                                             </a>
