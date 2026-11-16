@@ -75,7 +75,7 @@ add_action('acf/init', static function () {
         'location' => [[['param' => 'page_type', 'operator' => '==', 'value' => 'front_page']]],
         'position' => 'acf_after_title',
         'fields'   => [
-            ['key' => 'field_cm_home_kicker', 'label' => 'Hero tag line', 'name' => 'home_kicker', 'type' => 'text', 'default_value' => 'Children’s author in Bath'],
+            ['key' => 'field_cm_home_kicker', 'label' => 'Hero tag line', 'name' => 'home_kicker', 'type' => 'text', 'default_value' => 'Children’s author and illustrator in Bath'],
             ['key' => 'field_cm_home_latest', 'label' => 'Hero label above the book title', 'name' => 'home_latest_label', 'type' => 'text', 'default_value' => 'Latest book'],
             ['key' => 'field_cm_home_feat_h', 'label' => 'Featured books heading', 'name' => 'home_featured_heading', 'type' => 'text', 'default_value' => 'Featured books'],
             ['key' => 'field_cm_home_feat_l', 'label' => 'Featured books link text', 'name' => 'home_featured_link', 'type' => 'text', 'default_value' => 'See all books'],

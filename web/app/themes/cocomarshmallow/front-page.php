@@ -16,7 +16,7 @@ $t = static fn (string $key, string $default) => trim((string) cm_field($key)) !
     <section class="hero<?php echo $show_banner ? '' : ' hero--top'; ?>" aria-labelledby="hero-heading">
         <div class="container container--wide hero__inner">
             <div class="hero__text">
-                <h1 id="hero-heading" class="hero__kicker"><?php echo esc_html($t('home_kicker', 'Children’s author in Bath')); ?></h1>
+                <h1 id="hero-heading" class="hero__kicker"><?php echo esc_html($t('home_kicker', 'Children’s author and illustrator in Bath')); ?></h1>
                 <?php if ($hero) :
                     $hid   = $hero->get_id();
                     $blurb = cm_field('book_blurb', $hid) ?: wp_strip_all_tags($hero->get_short_description());
