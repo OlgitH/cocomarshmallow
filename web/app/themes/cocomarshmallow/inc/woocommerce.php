@@ -91,7 +91,12 @@ add_filter('wp_nav_menu_objects', static function ($items) {
         return $items;
     }
     foreach ($items as $item) {
-        if ($item->type === 'custom' && untrailingslashit((string) wp_parse_url($item->url, PHP_URL_PATH)) === '/books') {
+        if ($item->type !== 'custom') {
+            continue;
+        }
+        $path = untrailingslashit((string) wp_parse_url($item->url, PHP_URL_PATH));
+        parse_str((string) wp_parse_url($item->url, PHP_URL_QUERY), $q);
+        if ($path === '/books' || (int) ($q['page_id'] ?? 0) === (int) wc_get_page_id('shop')) {
             $item->url = wc_get_page_permalink('shop');
         }
     }
