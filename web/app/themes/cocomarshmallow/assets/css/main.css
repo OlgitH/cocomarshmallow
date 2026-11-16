@@ -637,3 +637,6 @@ body.header-solid .site-header::after {
 /* About page: Amy and Lysha photos stacked on laptop and up */
 @media (min-width: 56em) { .about-side .about-photos { grid-template-columns: 1fr; } }
 .about-side { position: static; }
+
+/* Brighter header illustration on the pink hero (Children's activities) */
+.page-hero--pink .page-hero__art { filter: saturate(1.4) contrast(1.12) brightness(1.04); }
