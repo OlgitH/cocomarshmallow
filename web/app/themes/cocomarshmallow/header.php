@@ -60,8 +60,10 @@ function cm_default_menu(): void
     $items = [
         [__('Shop', 'cocomarshmallow'), $shop],
         [__('About', 'cocomarshmallow'), home_url('/about/')],
-        [__('Children’s activities', 'cocomarshmallow'), home_url('/childrens-activities/'), [
-            [__('Art gallery', 'cocomarshmallow'), home_url('/art-gallery/')],
+        [__('Resources', 'cocomarshmallow'), home_url('/childrens-activities/'), [
+            [__('Children’s activities', 'cocomarshmallow'), home_url('/childrens-activities/')],
+            [__('Children’s art gallery', 'cocomarshmallow'), home_url('/art-gallery/')],
+            [__('Resources for nurseries', 'cocomarshmallow'), home_url('/resources-for-nurseries/')],
         ]],
         [__('News & events', 'cocomarshmallow'), home_url('/news-events/')],
         [__('Contact', 'cocomarshmallow'), home_url('/contact/')],
