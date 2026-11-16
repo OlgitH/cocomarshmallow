@@ -566,3 +566,6 @@ body.header-solid .site-header::after {
 @media (min-width: 64em) { .flex-gallery--3 { grid-template-columns: repeat(3, 1fr); } .flex-gallery--4 { grid-template-columns: repeat(4, 1fr); } }
 .cta-band--simple .cta-band__inner, .cta-band--simple > .container { display: block; }
 .text-center { text-align: center; }
+
+/* About page: rounded photo corners */
+.about-side .about-photos img, .about-more img { border-radius: var(--radius); }
