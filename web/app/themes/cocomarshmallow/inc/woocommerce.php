@@ -56,3 +56,23 @@ function cm_buy_now_url(WC_Product $product): string
     }
     return $product->get_permalink();
 }
+
+/** The shop page lives at /shop/ (it used to be /books/): rename it once and redirect the old URL. */
+add_action('init', static function () {
+    if (!function_exists('wc_get_page_id') || get_option('cm_shop_slug_renamed')) {
+        return;
+    }
+    $id = (int) wc_get_page_id('shop');
+    if ($id > 0 && get_post_field('post_name', $id) === 'books') {
+        wp_update_post(['ID' => $id, 'post_name' => 'shop', 'post_title' => 'Shop']);
+        flush_rewrite_rules();
+    }
+    update_option('cm_shop_slug_renamed', 1);
+}, 20);
+
+add_action('template_redirect', static function () {
+    if (function_exists('wc_get_page_permalink') && untrailingslashit(wp_parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH)) === '/books') {
+        wp_safe_redirect(wc_get_page_permalink('shop'), 301);
+        exit;
+    }
+});

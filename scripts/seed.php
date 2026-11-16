@@ -73,7 +73,7 @@ if (class_exists('WooCommerce')) {
     // Turn the WooCommerce "Shop" page into "Books"
     $shop_id = (int) wc_get_page_id('shop');
     if ($shop_id > 0) {
-        wp_update_post(['ID' => $shop_id, 'post_title' => 'Books', 'post_name' => 'books']);
+        wp_update_post(['ID' => $shop_id, 'post_title' => 'Shop', 'post_name' => 'shop']);
     }
 
     // Rename the default product category
@@ -131,9 +131,9 @@ wp_delete_post(1, true); // default "Hello world!"
 wp_delete_post(2, true); // default "Sample Page"
 
 // --- Menus ---------------------------------------------------------------
-$shop_url = function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/books/');
+$shop_url = function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/shop/');
 $items = [
-    ['Books', $shop_url],
+    ['Shop', $shop_url],
     ['About', get_permalink($about)],
     ['Children’s activities', get_permalink($act)],
     ['Art gallery', get_permalink($gallery)],

@@ -42,7 +42,7 @@ $content = <<<'HTML'
 <!-- wp:heading --><h2>Frequently asked questions</h2><!-- /wp:heading -->
 <!-- wp:html --><details><summary>What age are the books for?</summary><p>They are written for the early years and early primary years, and work especially well as read-aloud stories for nursery and preschool children.</p></details>
 <details><summary>Are the activities free to use in my setting?</summary><p>Yes. The printable activities on our children's activities page are free to download and print for use with your children.</p></details>
-<details><summary>Can I order books for my nursery or preschool?</summary><p>Yes, you can buy any book from our <a href="/books/">Books page</a>. If you would like to ask about ordering for a whole setting, please <a href="/contact/">get in touch</a>.</p></details><!-- /wp:html -->
+<details><summary>Can I order books for my nursery or preschool?</summary><p>Yes, you can buy any book from our <a href="/shop/">Shop page</a>. If you would like to ask about ordering for a whole setting, please <a href="/contact/">get in touch</a>.</p></details><!-- /wp:html -->
 HTML;
 
 $page = get_page_by_path($slug);

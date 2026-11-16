@@ -25,7 +25,7 @@ $t = static fn (string $key, string $default) => trim((string) cm_field($key)) !
                     <h2 class="hero__title"><?php echo esc_html($hero->get_name()); ?></h2>
                     <?php if ($blurb) : ?><p class="hero__blurb"><?php echo wp_kses_post(nl2br(esc_html($blurb))); ?></p><?php endif; ?>
                     <p class="hero__actions">
-                        <a class="button button--light" href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/books/')); ?>">
+                        <a class="button button--light" href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/shop/')); ?>">
                             <?php esc_html_e('Buy now', 'cocomarshmallow'); ?><span class="screen-reader-text">: <?php echo esc_html($hero->get_name()); ?></span>
                         </a>
                         <a class="button button--ghost" href="<?php echo esc_url($hero->get_permalink()); ?>">
@@ -36,7 +36,7 @@ $t = static fn (string $key, string $default) => trim((string) cm_field($key)) !
                     <p class="hero__label"><?php echo esc_html($t('home_latest_label', 'Latest book')); ?></p>
                     <h2 class="hero__title">Happiness</h2>
                     <p class="hero__blurb"><?php esc_html_e('Join Coco Marshmallow on a gentle adventure to discover what happiness feels like, with a fun mindfulness activity inside.', 'cocomarshmallow'); ?></p>
-                    <p class="hero__actions"><a class="button button--light" href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/books/')); ?>"><?php esc_html_e('Buy now', 'cocomarshmallow'); ?></a></p>
+                    <p class="hero__actions"><a class="button button--light" href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/shop/')); ?>"><?php esc_html_e('Buy now', 'cocomarshmallow'); ?></a></p>
                 <?php endif; ?>
             </div>
 
@@ -58,7 +58,7 @@ $t = static fn (string $key, string $default) => trim((string) cm_field($key)) !
         <div class="container container--wide">
             <header class="section__header">
                 <h2 id="featured-heading" class="section__title"><?php echo esc_html($t('home_featured_heading', 'Featured books')); ?></h2>
-                <a class="text-link" href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/books/')); ?>"><?php echo esc_html($t('home_featured_link', 'See all books')); ?><span aria-hidden="true"> →</span></a>
+                <a class="text-link" href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/shop/')); ?>"><?php echo esc_html($t('home_featured_link', 'See all books')); ?><span aria-hidden="true"> →</span></a>
             </header>
             <?php
             $featured = function_exists('wc_get_products') ? wc_get_products(['limit' => 4, 'status' => 'publish', 'featured' => true, 'orderby' => 'date', 'order' => 'DESC']) : [];

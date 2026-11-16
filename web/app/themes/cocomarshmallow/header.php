@@ -56,7 +56,7 @@ defined('ABSPATH') || exit;
 /** Used until a menu is assigned in Appearance > Menus. */
 function cm_default_menu(): void
 {
-    $shop = function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/books/');
+    $shop = function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/shop/');
     $items = [
         [__('Shop', 'cocomarshmallow'), $shop],
         [__('About', 'cocomarshmallow'), home_url('/about/')],

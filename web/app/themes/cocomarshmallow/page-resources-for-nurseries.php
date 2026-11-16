@@ -49,7 +49,7 @@ $nf = static fn (string $k, string $d = '') => trim((string) cm_field($k)) !== '
                 <p><?php echo esc_html($nf('nur_cta_text', 'Read a story together, then try the mindfulness activity. Download our free resources or take a look at the books.')); ?></p>
                 <p class="hero__actions">
                     <?php if ($book) : ?><a class="button" href="<?php echo esc_url($book->get_permalink()); ?>"><?php echo esc_html(sprintf(__('See %s', 'cocomarshmallow'), $book->get_name())); ?></a><?php endif; ?>
-                    <a class="button button--outline" href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/books/')); ?>"><?php echo esc_html($nf('nur_cta_all', 'All books')); ?></a>
+                    <a class="button button--outline" href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/shop/')); ?>"><?php echo esc_html($nf('nur_cta_all', 'All books')); ?></a>
                 </p>
             </div>
         </div>
