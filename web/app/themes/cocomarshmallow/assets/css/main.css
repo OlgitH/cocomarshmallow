@@ -585,3 +585,5 @@ body.header-solid .site-header::after {
 .tabs__list button[aria-selected="true"] { background: var(--pink); border-color: var(--pink); color: var(--white); }
 .tabs__list button:hover:not([aria-selected="true"]) { border-color: var(--pink); }
 .tabs__panel[hidden] { display: none; }
+/* Colouring sheets are portrait pages: show the whole sheet in the card instead of a square crop */
+#panel-colouring-sheets .activity-card__image img { aspect-ratio: 3 / 4; object-fit: contain; background: var(--white); }
