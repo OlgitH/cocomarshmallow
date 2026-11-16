@@ -58,7 +58,7 @@ function cm_default_menu(): void
 {
     $shop = function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/books/');
     $items = [
-        [__('Books', 'cocomarshmallow'), $shop],
+        [__('Shop', 'cocomarshmallow'), $shop],
         [__('About', 'cocomarshmallow'), home_url('/about/')],
         [__('Children’s activities', 'cocomarshmallow'), home_url('/childrens-activities/')],
         [__('News & events', 'cocomarshmallow'), home_url('/news-events/')],
