@@ -569,3 +569,7 @@ body.header-solid .site-header::after {
 
 /* About page: rounded photo corners */
 .about-side .about-photos img, .about-more img { border-radius: var(--radius); }
+
+/* Search bar: left-aligned (stays centred on the centred 404 page) */
+.search-form { margin: 1.5rem 0; }
+.text-center .search-form { margin-inline: auto; }
