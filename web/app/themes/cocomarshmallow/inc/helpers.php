@@ -94,3 +94,21 @@ function cm_stars($rating, string $class = ''): string
         $out
     );
 }
+
+/** "Follow us on Facebook and Instagram" block (only the networks that have a URL in Site settings). Returns '' if none. */
+function cm_follow_us(string $class = ''): string
+{
+    $links = array_values(array_filter(cm_social_links(), static fn ($s) => in_array($s['key'], ['facebook', 'instagram'], true)));
+    if (!$links) {
+        return '';
+    }
+    $labels  = array_column($links, 'label');
+    $heading = sprintf(__('Follow us on %s', 'cocomarshmallow'), implode(__(' and ', 'cocomarshmallow'), $labels));
+    $id      = wp_unique_id('follow-');
+    $out     = '<div class="follow-block ' . esc_attr($class) . '" role="group" aria-labelledby="' . esc_attr($id) . '"><p class="follow-block__title" id="' . esc_attr($id) . '">' . esc_html($heading) . '</p><ul class="social" role="list">';
+    foreach ($links as $s) {
+        $out .= '<li><a href="' . esc_url($s['url']) . '" rel="noopener me" target="_blank">' . cm_icon($s['key'])
+            . '<span class="screen-reader-text">' . esc_html($s['label']) . ' ' . esc_html__('(opens in a new tab)', 'cocomarshmallow') . '</span></a></li>';
+    }
+    return $out . '</ul></div>';
+}

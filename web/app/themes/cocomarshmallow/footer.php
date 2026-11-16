@@ -4,19 +4,7 @@
         <section class="footer-col footer-col--about" aria-labelledby="footer-about">
             <h2 id="footer-about" class="footer-title"><?php bloginfo('name'); ?></h2>
             <p><?php echo esc_html(trim((string) cm_field('footer_blurb', 'option')) ?: get_bloginfo('description') ?: 'Gentle, joyful picture books that help little ones understand their feelings. Written and illustrated in Bath.'); ?></p>
-            <?php $socials = cm_social_links(); ?>
-            <?php if ($socials) : ?>
-                <ul class="social" aria-label="<?php esc_attr_e('Follow us', 'cocomarshmallow'); ?>">
-                    <?php foreach ($socials as $s) : ?>
-                        <li>
-                            <a href="<?php echo esc_url($s['url']); ?>" rel="noopener me" target="_blank">
-                                <?php echo cm_icon($s['key']); ?>
-                                <span class="screen-reader-text"><?php echo esc_html($s['label']); ?> <?php esc_html_e('(opens in a new tab)', 'cocomarshmallow'); ?></span>
-                            </a>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            <?php endif; ?>
+            <?php echo cm_follow_us('follow-block--footer'); ?>
         </section>
 
         <nav class="footer-col" aria-labelledby="footer-explore">

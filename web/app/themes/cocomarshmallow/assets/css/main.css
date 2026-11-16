@@ -596,3 +596,8 @@ body.header-solid .site-header::after {
 .form__row--check input { width: auto; margin-top: 0.3rem; }
 .form__note { font-size: 0.9rem; }
 .downloads-join { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin: 0 0 1.5rem; }
+
+/* Follow us block (footer + contact page) */
+.follow-block__title { font-weight: 700; margin: 1.5rem 0 0; }
+.follow-block .social { margin-top: 0.6rem; }
+.follow-block--footer .follow-block__title { margin-top: 1.25rem; }

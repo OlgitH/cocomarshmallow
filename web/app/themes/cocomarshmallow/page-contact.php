@@ -19,6 +19,7 @@ $loc    = cm_field('contact_location', 'option') ?: 'Bath, Somerset';
             <?php echo trim((string) cm_field('contact_intro')) !== '' ? wp_kses_post(apply_filters('the_content', cm_field('contact_intro'))) : apply_filters('the_content', get_the_content()); ?>
             <p><strong><?php esc_html_e('Based in', 'cocomarshmallow'); ?></strong> <?php echo esc_html($loc); ?></p>
             <?php if ($mail) : ?><p><a href="mailto:<?php echo esc_attr(antispambot($mail)); ?>"><?php echo esc_html(antispambot($mail)); ?></a></p><?php endif; ?>
+            <?php echo cm_follow_us(); ?>
         </div>
 
         <form id="contact-form" class="form" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" novalidate>
