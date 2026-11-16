@@ -160,6 +160,13 @@ add_action('add_meta_boxes', static function () {
                 esc_html($label), esc_attr($key), esc_attr(get_post_meta($post->ID, $key, true)));
         }
     }, 'cm_activity');
+    add_meta_box('cm_artwork_fallback', 'Artwork details', static function ($post) {
+        wp_nonce_field('cm_fallback', 'cm_fallback_nonce');
+        foreach (['artwork_artist' => 'Artist’s first name', 'artwork_age' => 'Age'] as $key => $label) {
+            printf('<p><label><strong>%s</strong><br><input type="text" class="widefat" name="%s" value="%s"></label></p>',
+                esc_html($label), esc_attr($key), esc_attr(get_post_meta($post->ID, $key, true)));
+        }
+    }, 'cm_artwork');
 });
 
 add_action('add_meta_boxes', static function () {
@@ -179,7 +186,7 @@ add_action('save_post', static function ($post_id) {
     if (function_exists('acf_add_local_field_group') || !isset($_POST['cm_fallback_nonce']) || !wp_verify_nonce($_POST['cm_fallback_nonce'], 'cm_fallback') || !current_user_can('edit_post', $post_id)) {
         return;
     }
-    foreach (['book_blurb', 'book_author', 'book_illustrator', 'book_age_range', 'book_isbn', 'activity_file', 'activity_age_range', 'activity_duration', 'review_rating', 'review_source', 'review_reply', 'review_reply_by'] as $key) {
+    foreach (['book_blurb', 'book_author', 'book_illustrator', 'book_age_range', 'book_isbn', 'activity_file', 'activity_age_range', 'activity_duration', 'review_rating', 'review_source', 'review_reply', 'review_reply_by', 'artwork_artist', 'artwork_age'] as $key) {
         if (isset($_POST[$key])) {
             update_post_meta($post_id, $key, sanitize_text_field(wp_unslash($_POST[$key])));
         }

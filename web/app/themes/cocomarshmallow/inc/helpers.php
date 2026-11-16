@@ -113,3 +113,10 @@ function cm_follow_us(string $class = ''): string
     }
     return $out . '</ul></div>';
 }
+
+/** URL of the Art gallery page (falls back to /art-gallery/). */
+function cm_art_gallery_url(): string
+{
+    $pages = get_posts(['post_type' => 'page', 'meta_key' => '_wp_page_template', 'meta_value' => 'page-art-gallery.php', 'posts_per_page' => 1, 'fields' => 'ids']);
+    return $pages ? get_permalink($pages[0]) : home_url('/art-gallery/');
+}

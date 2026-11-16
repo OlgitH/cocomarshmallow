@@ -601,3 +601,39 @@ body.header-solid .site-header::after {
 .follow-block__title { font-weight: 700; margin: 1.5rem 0 0; }
 .follow-block .social { margin-top: 0.6rem; }
 .follow-block--footer .follow-block__title { margin-top: 1.25rem; }
+
+/* Children's activities sub-navigation and Art gallery */
+.subnav { padding-top: 1.5rem; }
+.subnav ul { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; margin: 0; padding: 0; }
+.subnav a { display: inline-block; padding: 0.5rem 1.1rem; border: 2px solid var(--blue); border-radius: 999px; color: var(--ink); font-weight: 700; text-decoration: none; }
+.subnav a:hover { border-color: var(--pink-dark); color: var(--pink-dark); }
+.subnav a[aria-current] { background: var(--blue-soft); }
+.art-grid { display: grid; gap: 1.75rem; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); list-style: none; padding: 0; margin: 0; }
+.art-card { background: var(--white); border: 2px solid var(--blue); border-radius: var(--radius); overflow: hidden; transition: box-shadow 0.2s, transform 0.2s; }
+.art-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+.art-card:nth-child(4n+1) { border-color: var(--green); }
+.art-card:nth-child(4n+2) { border-color: var(--orange); }
+.art-card:nth-child(4n+4) { border-color: var(--pink); }
+.art-card__link { display: block; }
+.art-card__link img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.art-card__body { padding: 1rem 1.25rem 1.25rem; }
+.art-card__title { font-size: 1.2rem; margin: 0 0 0.25rem; }
+.art-card__meta { margin: 0; color: var(--ink-soft); font-size: 0.95rem; }
+.art-card__text { margin: 0.5rem 0 0; }
+.art-dialog { border: 0; border-radius: var(--radius); padding: 1rem; max-width: min(92vw, 60rem); text-align: center; }
+.art-dialog::backdrop { background: rgb(0 0 0 / 0.7); }
+.art-dialog img { display: block; max-width: 100%; max-height: 78vh; margin: 0 auto 1rem; }
+
+/* Dropdown sub-menu (desktop); indented list on mobile */
+.primary-nav .sub-menu { list-style: none; margin: 0; padding: 0 0 0 1rem; }
+@media (min-width: 56em) {
+  .primary-nav .menu > li { position: relative; }
+  .primary-nav .sub-menu { display: none; position: absolute; top: 100%; left: 0; min-width: 13rem; padding: 0.5rem; background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); z-index: 20; }
+  .primary-nav .menu > li:hover > .sub-menu, .primary-nav .menu > li:focus-within > .sub-menu { display: block; }
+  .primary-nav .sub-menu a, body:has(:is(.page-hero--pink, .hero--top)) .primary-nav .sub-menu a { color: var(--ink); border-radius: 0.6rem; }
+  .primary-nav .sub-menu a:hover, body:has(:is(.page-hero--pink, .hero--top)) .primary-nav .sub-menu a:hover { color: var(--pink-dark); background: var(--blue-soft); text-decoration: none; }
+}
+
+/* About page: Amy and Lysha photos stacked on laptop and up */
+@media (min-width: 56em) { .about-side .about-photos { grid-template-columns: 1fr; } }
+.about-side { position: static; }

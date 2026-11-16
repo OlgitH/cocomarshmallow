@@ -89,3 +89,19 @@
     select(start);
   });
 })();
+
+// Art gallery: open artwork larger in a dialog.
+(function () {
+  var dlg = document.querySelector('.art-dialog');
+  if (!dlg || typeof dlg.showModal !== 'function') return;
+  var img = dlg.querySelector('img');
+  document.querySelectorAll('[data-art-full]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      img.src = a.getAttribute('data-art-full');
+      img.alt = a.getAttribute('data-art-alt') || '';
+      dlg.showModal();
+    });
+  });
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+})();

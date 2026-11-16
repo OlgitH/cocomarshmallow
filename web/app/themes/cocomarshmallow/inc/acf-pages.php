@@ -98,6 +98,30 @@ add_action('acf/init', static function () {
         ],
     ]);
 
+    // Art gallery
+    acf_add_local_field_group([
+        'key'      => 'group_cm_gallery_page',
+        'title'    => 'Art gallery page',
+        'location' => [[['param' => 'page_template', 'operator' => '==', 'value' => 'page-art-gallery.php']]],
+        'position' => 'acf_after_title',
+        'hide_on_screen' => ['the_content'],
+        'fields'   => [
+            ['key' => 'field_cm_gallery_intro', 'label' => 'Intro text', 'name' => 'gallery_intro', 'type' => 'wysiwyg', 'toolbar' => 'basic', 'media_upload' => 0],
+            ['key' => 'field_cm_gallery_empty', 'label' => 'Message when there is no artwork', 'name' => 'gallery_empty', 'type' => 'text', 'default_value' => 'Artwork is coming soon. Check back shortly!'],
+        ],
+    ]);
+
+    // Artwork details
+    acf_add_local_field_group([
+        'key'      => 'group_cm_artwork',
+        'title'    => 'Artwork details',
+        'location' => [[['param' => 'post_type', 'operator' => '==', 'value' => 'cm_artwork']]],
+        'fields'   => [
+            ['key' => 'field_cm_artwork_artist', 'label' => 'Artist’s first name', 'name' => 'artwork_artist', 'type' => 'text', 'wrapper' => ['width' => '50']],
+            ['key' => 'field_cm_artwork_age', 'label' => 'Age', 'name' => 'artwork_age', 'type' => 'text', 'wrapper' => ['width' => '50']],
+        ],
+    ]);
+
     // Contact
     acf_add_local_field_group([
         'key'      => 'group_cm_contact_page',

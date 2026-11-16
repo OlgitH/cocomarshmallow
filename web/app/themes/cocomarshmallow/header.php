@@ -45,7 +45,7 @@ defined('ABSPATH') || exit;
                 'container'      => false,
                 'menu_class'     => 'menu',
                 'fallback_cb'    => 'cm_default_menu',
-                'depth'          => 1,
+                'depth'          => 2,
             ]);
             ?>
             <?php if (function_exists('WC')) { get_template_part('template-parts/cart-link'); } ?>
@@ -60,13 +60,25 @@ function cm_default_menu(): void
     $items = [
         [__('Shop', 'cocomarshmallow'), $shop],
         [__('About', 'cocomarshmallow'), home_url('/about/')],
-        [__('Children’s activities', 'cocomarshmallow'), home_url('/childrens-activities/')],
+        [__('Children’s activities', 'cocomarshmallow'), home_url('/childrens-activities/'), [
+            [__('Art gallery', 'cocomarshmallow'), home_url('/art-gallery/')],
+        ]],
         [__('News & events', 'cocomarshmallow'), home_url('/news-events/')],
         [__('Contact', 'cocomarshmallow'), home_url('/contact/')],
     ];
     echo '<ul class="menu">';
-    foreach ($items as [$label, $url]) {
-        printf('<li class="menu-item"><a href="%s">%s</a></li>', esc_url($url), esc_html($label));
+    foreach ($items as $item) {
+        [$label, $url] = $item;
+        $children = $item[2] ?? [];
+        printf('<li class="menu-item%s"><a href="%s">%s</a>', $children ? ' menu-item-has-children' : '', esc_url($url), esc_html($label));
+        if ($children) {
+            echo '<ul class="sub-menu">';
+            foreach ($children as [$cl, $cu]) {
+                printf('<li class="menu-item"><a href="%s">%s</a></li>', esc_url($cu), esc_html($cl));
+            }
+            echo '</ul>';
+        }
+        echo '</li>';
     }
     echo '</ul>';
 }

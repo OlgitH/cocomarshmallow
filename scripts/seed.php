@@ -45,10 +45,13 @@ $about   = cm_seed_page('about', 'About', <<<HTML
 <!-- wp:paragraph --><p>The Adventures of Coco Marshmallow follow a curious cat through everyday emotions, with a simple mindfulness activity in every book so families can explore each feeling together. Illustrations are by Amy Chandler.</p><!-- /wp:paragraph -->
 HTML);
 $act     = cm_seed_page('childrens-activities', 'Children’s activities', '<!-- wp:paragraph --><p>Printable colouring sheets, mindfulness cards and more to enjoy with Coco Marshmallow. Download, print and play!</p><!-- /wp:paragraph -->');
+$gallery = cm_seed_page('art-gallery', 'Art gallery', '<!-- wp:paragraph --><p>Wonderful artwork from our young readers. Have you drawn Coco Marshmallow? Send us your picture and it could appear here!</p><!-- /wp:paragraph -->');
 $news    = cm_seed_page('news-events', 'News & events');
 $contact = cm_seed_page('contact', 'Contact', '<!-- wp:paragraph --><p>Questions about the books, school visits or events in and around Bath? Send a message and we’ll get back to you soon.</p><!-- /wp:paragraph -->');
 
 update_post_meta($act, '_wp_page_template', 'page-childrens-activities.php');
+update_post_meta($gallery, '_wp_page_template', 'page-art-gallery.php');
+update_post_meta($gallery, 'gallery_intro', 'Wonderful artwork from our young readers. Have you drawn Coco Marshmallow? Send us your picture and it could appear here!');
 update_post_meta($contact, '_wp_page_template', 'page-contact.php');
 update_option('show_on_front', 'page');
 update_option('page_on_front', $home);
@@ -133,6 +136,7 @@ $items = [
     ['Books', $shop_url],
     ['About', get_permalink($about)],
     ['Children’s activities', get_permalink($act)],
+    ['Art gallery', get_permalink($gallery)],
     ['News & events', get_permalink($news)],
     ['Contact', get_permalink($contact)],
 ];

@@ -25,6 +25,13 @@ get_header();
     </header>
     <?php $act_page_id = get_the_ID(); endwhile; ?>
 
+    <nav class="subnav container container--wide" aria-label="<?php esc_attr_e('Children’s activities sections', 'cocomarshmallow'); ?>">
+        <ul>
+            <li><a href="<?php echo esc_url(get_permalink($act_page_id)); ?>" aria-current="page"><?php esc_html_e('Downloads', 'cocomarshmallow'); ?></a></li>
+            <li><a href="<?php echo esc_url(cm_art_gallery_url()); ?>"><?php esc_html_e('Art gallery', 'cocomarshmallow'); ?></a></li>
+        </ul>
+    </nav>
+
     <section class="section container container--wide" aria-labelledby="downloads-heading">
         <h2 id="downloads-heading" class="section__title"><?php echo esc_html(trim((string) cm_field('act_heading', $act_page_id)) ?: 'Free downloads'); ?></h2>
         <?php $mb = cm_mailing_list_button(); if ($mb) : ?><p class="downloads-join"><?php esc_html_e('Want to hear about new activities and books?', 'cocomarshmallow'); ?> <?php echo $mb; ?></p><?php endif; ?>
