@@ -57,22 +57,55 @@ function cm_buy_now_url(WC_Product $product): string
     return $product->get_permalink();
 }
 
-/** The shop page lives at /shop/ (it used to be /books/): rename it once and redirect the old URL. */
+/**
+ * The shop page lives at /shop/ (it used to be /books/). Self-heals on any load:
+ * finds the shop page (falling back to the old /books/ page), frees the "shop" slug
+ * if another page holds it, and renames the page.
+ */
 add_action('init', static function () {
-    if (!function_exists('wc_get_page_id') || get_option('cm_shop_slug_renamed')) {
+    if (!function_exists('wc_get_page_id')) {
         return;
     }
     $id = (int) wc_get_page_id('shop');
-    if ($id > 0 && get_post_field('post_name', $id) === 'books') {
-        wp_update_post(['ID' => $id, 'post_name' => 'shop', 'post_title' => 'Shop']);
-        flush_rewrite_rules();
+    if ($id <= 0) {
+        $old = get_page_by_path('books');
+        if (!$old) {
+            return;
+        }
+        $id = (int) $old->ID;
+        update_option('woocommerce_shop_page_id', $id);
     }
-    update_option('cm_shop_slug_renamed', 1);
+    if (get_post_field('post_name', $id) === 'shop') {
+        return;
+    }
+    foreach (get_posts(['post_type' => 'page', 'name' => 'shop', 'post_status' => 'any', 'posts_per_page' => -1, 'exclude' => [$id]]) as $other) {
+        wp_update_post(['ID' => $other->ID, 'post_name' => 'shop-old-' . $other->ID]);
+    }
+    wp_update_post(['ID' => $id, 'post_name' => 'shop', 'post_title' => 'Shop', 'post_status' => 'publish']);
+    flush_rewrite_rules();
 }, 20);
 
+/** Old /books/ links (including custom menu items) go to the shop page. */
+add_filter('wp_nav_menu_objects', static function ($items) {
+    if (!function_exists('wc_get_page_permalink')) {
+        return $items;
+    }
+    foreach ($items as $item) {
+        if ($item->type === 'custom' && untrailingslashit((string) wp_parse_url($item->url, PHP_URL_PATH)) === '/books') {
+            $item->url = wc_get_page_permalink('shop');
+        }
+    }
+    return $items;
+});
+
 add_action('template_redirect', static function () {
-    if (function_exists('wc_get_page_permalink') && untrailingslashit(wp_parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH)) === '/books') {
-        wp_safe_redirect(wc_get_page_permalink('shop'), 301);
+    if (!function_exists('wc_get_page_permalink')) {
+        return;
+    }
+    $path   = untrailingslashit((string) wp_parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH));
+    $target = wc_get_page_permalink('shop');
+    if ($path === '/books' && untrailingslashit((string) wp_parse_url($target, PHP_URL_PATH)) !== '/books') {
+        wp_safe_redirect($target, 301);
         exit;
     }
 });
