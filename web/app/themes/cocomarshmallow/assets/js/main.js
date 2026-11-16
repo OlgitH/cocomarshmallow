@@ -47,3 +47,45 @@
   window.addEventListener('load', fit);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
 })();
+
+// Accessible tabs (e.g. Activities / Colouring sheets). Without JS every panel is shown under its own heading.
+(function () {
+  document.querySelectorAll('[data-tabs]').forEach(function (root) {
+    var list = root.querySelector('[role="tablist"]');
+    if (!list) return;
+    var tabs = Array.prototype.slice.call(list.querySelectorAll('[role="tab"]'));
+    var panels = tabs.map(function (t) { return document.getElementById(t.getAttribute('aria-controls')); });
+    list.hidden = false;
+    root.classList.add('tabs--js');
+
+    function select(i, focus) {
+      tabs.forEach(function (t, n) {
+        var on = n === i;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        panels[n].hidden = !on;
+      });
+      if (focus) tabs[i].focus();
+    }
+
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () {
+        select(i);
+        if (history.replaceState) history.replaceState(null, '', '#' + t.id.replace('tab-', ''));
+      });
+      t.addEventListener('keydown', function (e) {
+        var n = null;
+        if (e.key === 'ArrowRight') n = (i + 1) % tabs.length;
+        else if (e.key === 'ArrowLeft') n = (i - 1 + tabs.length) % tabs.length;
+        else if (e.key === 'Home') n = 0;
+        else if (e.key === 'End') n = tabs.length - 1;
+        if (n !== null) { e.preventDefault(); select(n, true); }
+      });
+    });
+
+    var start = 0;
+    var hash = location.hash.replace('#', '');
+    tabs.forEach(function (t, i) { if (t.id === 'tab-' + hash) start = i; });
+    select(start);
+  });
+})();
