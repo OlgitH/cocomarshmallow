@@ -689,7 +689,7 @@ body:has(:is(.page-hero--pink, .hero--top).swatch--light) .cart-link__count { ba
 
 /* ---- Homepage carousel ---------------------------------------------------- */
 .carousel { position: relative; }
-.carousel__track { display: flex; margin: 0; padding: 0; list-style: none; overflow: hidden; touch-action: pan-y pinch-zoom; } /* never scrolls by itself: moved by buttons/swipe only */
+.carousel__track { position: relative; display: flex; margin: 0; padding: 0; list-style: none; overflow: hidden; touch-action: pan-y pinch-zoom; } /* never scrolls by itself: moved by buttons/swipe only */
 .carousel__slide { flex: 0 0 100%; min-width: 0; display: flex; align-items: center; }
 .carousel__slide > .container { width: min(100% - 2 * var(--gutter), 74rem); }
 .carousel__controls { position: absolute; left: 0; right: 0; bottom: 1.25rem; display: flex; align-items: center; justify-content: center; gap: 1rem; }
@@ -715,3 +715,18 @@ body:has(:is(.page-hero--pink, .hero--top).swatch--light) .cart-link__count { ba
 .hero--carousel.hero--top .carousel__slide { padding-top: clamp(8rem, 12vw, 9.5rem); }
 .home-banner + .hero--carousel .carousel__slide { padding-top: calc(var(--tuck) + clamp(2.5rem, 6vw, 4.5rem)); }
 body.header-solid .hero--carousel.hero--top .carousel__slide { padding-top: 7rem; }
+
+/* Never any sideways scrolling on small screens */
+html, body { overflow-x: clip; }
+
+/* Mobile menu: a full-width overlay under the header (not inset, no step at the bottom) */
+@media (max-width: 55.99em) {
+  body.nav-open .site-header__inner { position: static; }
+  body.nav-open .site-header .primary-nav {
+    position: absolute; top: 100%; left: 0; right: 0; width: auto; margin: 0; z-index: 1;
+    background: var(--white); border-radius: 0; box-shadow: 0 14px 24px rgb(42 36 48 / 0.18);
+    padding: 0.5rem var(--gutter) 1.5rem;
+  }
+  body.nav-open.header-solid .site-header .primary-nav { padding-top: 3.5rem; }
+  body.nav-open .site-header::after { display: none; } /* the wobbly header edge would show as a step beside the overlay */
+}
