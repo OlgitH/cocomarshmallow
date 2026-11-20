@@ -61,7 +61,7 @@ function cm_show_banner($post_id = null): bool
 function cm_swatches(): array
 {
     return [
-        'pink'   => 'Pink (default)',
+        'pink'   => 'Pink',
         'purple' => 'Dark purple',
         'green'  => 'Dark green',
         'orange' => 'Orange',

@@ -76,6 +76,8 @@ add_action('acf/init', static function () {
              'instructions' => 'The latest book comes first in the carousel. Only one book can be the latest: choosing this clears it from the others.'],
             ['key' => 'field_cm_coming_soon', 'label' => 'Coming soon', 'name' => 'coming_soon', 'type' => 'true_false', 'ui' => 1,
              'instructions' => 'Shows “Coming soon” instead of the price and the Add to basket button. Untick when the book is ready to sell.'],
+            ['key' => 'field_cm_carousel_colour', 'label' => 'Carousel background colour', 'name' => 'carousel_colour', 'type' => 'select', 'choices' => ['' => 'Default (the homepage’s Header colour)'] + cm_swatches(), 'default_value' => '', 'return_format' => 'value',
+             'instructions' => 'Background colour of this book’s slide in the homepage carousel.'],
             ['key' => 'field_cm_carousel_image', 'label' => 'Carousel image (optional)', 'name' => 'carousel_image', 'type' => 'image', 'return_format' => 'id', 'preview_size' => 'medium',
              'instructions' => 'Square cover image for the homepage carousel. Leave empty to use the product image (or a “Cover coming soon” placeholder).'],
             ['key' => 'field_cm_blurb', 'label' => 'Blurb', 'name' => 'book_blurb', 'type' => 'textarea', 'rows' => 5, 'new_lines' => 'br',
@@ -156,6 +158,11 @@ add_action('add_meta_boxes', static function () {
             printf('<p><label><strong>%s</strong><br><input type="text" class="widefat" name="%s" value="%s"></label></p>',
                 esc_html($label), esc_attr($key), esc_attr(get_post_meta($post->ID, $key, true)));
         }
+        printf('<p><label><strong>Carousel background colour</strong><br><select name="carousel_colour"><option value="">Default (page colour)</option>');
+        foreach (cm_swatches() as $slug => $label) {
+            printf('<option value="%s"%s>%s</option>', esc_attr($slug), selected(get_post_meta($post->ID, 'carousel_colour', true), $slug, false), esc_html($label));
+        }
+        echo '</select></label></p>';
         foreach (['show_in_hero' => 'Appear in homepage carousel', 'is_latest_book' => 'Latest book (comes first)', 'coming_soon' => 'Coming soon'] as $key => $label) {
             printf('<p><label><input type="checkbox" name="%s" value="1" %s> %s</label></p>', esc_attr($key), checked(get_post_meta($post->ID, $key, true), '1', false), esc_html($label));
         }
@@ -195,7 +202,7 @@ add_action('save_post', static function ($post_id) {
     if (function_exists('acf_add_local_field_group') || !isset($_POST['cm_fallback_nonce']) || !wp_verify_nonce($_POST['cm_fallback_nonce'], 'cm_fallback') || !current_user_can('edit_post', $post_id)) {
         return;
     }
-    foreach (['book_blurb', 'book_author', 'book_illustrator', 'book_age_range', 'book_isbn', 'activity_file', 'activity_age_range', 'activity_duration', 'review_rating', 'review_source', 'review_reply', 'review_reply_by', 'artwork_artist', 'artwork_age'] as $key) {
+    foreach (['book_blurb', 'book_author', 'book_illustrator', 'book_age_range', 'book_isbn', 'activity_file', 'activity_age_range', 'activity_duration', 'review_rating', 'review_source', 'review_reply', 'review_reply_by', 'artwork_artist', 'artwork_age', 'carousel_colour'] as $key) {
         if (isset($_POST[$key])) {
             update_post_meta($post_id, $key, sanitize_text_field(wp_unslash($_POST[$key])));
         }

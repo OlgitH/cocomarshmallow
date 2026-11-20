@@ -704,3 +704,8 @@ body:has(:is(.page-hero--pink, .hero--top).swatch--light) .cart-link__count { ba
 .coming-soon { display: inline-block; font-weight: 700; color: var(--purple-dark); }
 @media (prefers-reduced-motion: reduce) { .carousel__track { scroll-behavior: auto; } }
 @media (prefers-reduced-motion: no-preference) { .carousel__track { scroll-behavior: smooth; } }
+
+/* Carousel: each slide carries its book's swatch; the hero background follows the slide in view */
+.hero { transition: background-color 0.3s; }
+.carousel__slide { background: var(--sw-bg, var(--pink)); color: var(--sw-fg, var(--white)); }
+@media (prefers-reduced-motion: reduce) { .hero { transition: none; } }

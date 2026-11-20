@@ -119,8 +119,14 @@
       i = Math.max(0, Math.min(slides.length - 1, i));
       track.scrollTo({ left: i * track.clientWidth });
     }
+    var hero = root.closest('.hero');
     function sync() {
       var i = index();
+      var sw = slides[i] && slides[i].getAttribute('data-swatch');
+      if (hero && sw) {
+        Array.prototype.filter.call(hero.classList, function (c) { return c.indexOf('swatch--') === 0; }).forEach(function (c) { hero.classList.remove(c); });
+        sw.split(' ').forEach(function (c) { if (c) hero.classList.add(c); });
+      }
       dots.forEach(function (d, n) { if (n === i) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current'); });
     }
     var prev = root.querySelector('[data-carousel-prev]');

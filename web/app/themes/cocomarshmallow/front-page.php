@@ -16,8 +16,10 @@ $t = static fn (string $key, string $default) => trim((string) cm_field($key)) !
     $books    = cm_carousel_products();
     $shop_url = function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/shop/');
     $count    = max(1, count($books));
+    $page_sw  = (string) get_post_meta(get_the_ID(), 'hero_colour', true);
+    $slide_sw = static fn ($b) => cm_swatch_class((string) get_post_meta($b->get_id(), 'carousel_colour', true) ?: $page_sw); // each book's own colour, else the page's
     ?>
-    <section class="hero<?php echo ($show_banner ? '' : ' hero--top') . cm_hero_swatch(); ?>" aria-labelledby="hero-heading">
+    <section class="hero<?php echo ($show_banner ? '' : ' hero--top') . ($books ? $slide_sw($books[0]) : cm_swatch_class($page_sw)); ?>" aria-labelledby="hero-heading">
         <div class="container container--wide">
             <h1 id="hero-heading" class="hero__kicker"><?php echo esc_html($t('home_kicker', 'Children’s author and illustrator in Bath')); ?></h1>
         </div>
@@ -30,7 +32,7 @@ $t = static fn (string $key, string $default) => trim((string) cm_field($key)) !
                 $img_id = (int) cm_field('carousel_image', $bid) ?: (int) $book->get_image_id();
                 $is_latest = get_post_meta($bid, 'is_latest_book', true) === '1';
                 ?>
-                <li class="carousel__slide" role="group" aria-roledescription="slide" aria-label="<?php echo esc_attr(sprintf(__('%1$d of %2$d', 'cocomarshmallow'), $i + 1, $count)); ?>">
+                <li class="carousel__slide<?php echo esc_attr($slide_sw($book)); ?>" data-swatch="<?php echo esc_attr(trim($slide_sw($book))); ?>" role="group" aria-roledescription="slide" aria-label="<?php echo esc_attr(sprintf(__('%1$d of %2$d', 'cocomarshmallow'), $i + 1, $count)); ?>">
                     <div class="container container--wide hero__inner">
                         <div class="hero__text">
                             <p class="hero__label"><?php echo esc_html($soon ? __('Coming soon', 'cocomarshmallow') : ($is_latest ? $t('home_latest_label', 'Latest book') : __('Book', 'cocomarshmallow'))); ?></p>
