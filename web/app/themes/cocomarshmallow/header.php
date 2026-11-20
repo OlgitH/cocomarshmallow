@@ -15,7 +15,7 @@ defined('ABSPATH') || exit;
 <header class="site-header" id="top">
     <div class="container container--wide site-header__inner">
         <a class="brand" href="<?php echo esc_url(home_url('/')); ?>" aria-label="<?php echo esc_attr(get_bloginfo('name') . ' – home'); ?>">
-            <img class="brand__logo" src="<?php echo esc_url(cm_asset('img/logo-original.png')); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>" width="900" height="292">
+            <img class="brand__logo" src="<?php echo esc_url(cm_asset('img/logo-white-border.webp')); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>" width="1200" height="508">
         </a>
 
         <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">
