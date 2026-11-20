@@ -63,7 +63,7 @@ function cm_default_menu(): void
         [__('Resources', 'cocomarshmallow'), home_url('/childrens-activities/'), [
             [__('Children’s activities', 'cocomarshmallow'), home_url('/childrens-activities/')],
             [__('Children’s art gallery', 'cocomarshmallow'), home_url('/art-gallery/')],
-            [__('Resources for nurseries', 'cocomarshmallow'), home_url('/resources-for-nurseries/')],
+            [__('Resources for nurseries and preschools', 'cocomarshmallow'), home_url('/resources-for-nurseries/')],
         ]],
         [__('News & events', 'cocomarshmallow'), home_url('/news-events/')],
         [__('Contact', 'cocomarshmallow'), home_url('/contact/')],

@@ -221,7 +221,7 @@ body:has(.page-hero:not(.page-hero--pink)) .site-header { background: transparen
 .page-hero .rank-math-breadcrumb { display: inline-block; padding: 0.2rem 0.8rem; background: var(--white); color: var(--ink); border-radius: 999px; }
 .page-hero .rank-math-breadcrumb a { color: var(--teal); }
 .page-hero > .container { width: min(100% - 2 * var(--gutter), 74rem); } /* same left edge as the logo on every page */
-.page-hero__title { color: var(--ink); font-weight: 700; }
+.page-hero__title { color: var(--teal-dark); font-weight: 700; } /* very dark green: softer than ink */
 .page-hero .entry__meta { display: inline-block; margin-top: 0.5rem; padding: 0.1rem 0.7rem; background: var(--white); color: var(--ink); border-radius: 999px; }
 /* Pink hero (children's activities, nurseries): same look as the home hero */
 .page-hero--pink { display: block; min-height: 0; padding-block: clamp(8rem, 12vw, 9.5rem) calc(var(--banner-curve) + 2rem); background: var(--pink); color: var(--white); clip-path: var(--banner-arc); }
@@ -540,8 +540,8 @@ body.header-solid .site-header::after {
    so it looks the same on mobile and desktop */
 .page-hero, .page-hero--pink {
   clip-path: none;
-  -webkit-mask: linear-gradient(#000, #000) top / 100% calc(100% - var(--banner-curve) + 1px) no-repeat, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 100' preserveAspectRatio='none'%3E%3Cpath fill='%23000' d='M0 0H1200V0.62L1180 28.94L1160 39.63L1140 47.33L1120 53.51L1100 58.69L1080 63.15L1060 67.05L1040 70.51L1020 73.6L1000 76.39L980 78.94L960 81.27L940 83.42L920 85.4L900 87.23L880 88.93L860 90.5L840 91.95L820 93.26L800 94.45L780 95.52L760 96.45L740 97.25L720 97.91L700 98.43L680 98.82L660 99.08L640 99.21L620 99.23L600 99.16L580 99.01L560 98.77L540 98.45L520 98.05L500 97.57L480 97.01L460 96.37L440 95.66L420 94.88L400 94.03L380 93.09L360 92.07L340 90.94L320 89.69L300 88.31L280 86.77L260 85.04L240 83.11L220 80.92L200 78.45L180 75.66L160 72.49L140 68.89L120 64.77L100 60.03L80 54.51L60 47.96L40 39.87L20 28.8L0 0.48Z'/%3E%3C/svg%3E") bottom / 100% var(--banner-curve) no-repeat;
-  mask: linear-gradient(#000, #000) top / 100% calc(100% - var(--banner-curve) + 1px) no-repeat, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 100' preserveAspectRatio='none'%3E%3Cpath fill='%23000' d='M0 0H1200V0.62L1180 28.94L1160 39.63L1140 47.33L1120 53.51L1100 58.69L1080 63.15L1060 67.05L1040 70.51L1020 73.6L1000 76.39L980 78.94L960 81.27L940 83.42L920 85.4L900 87.23L880 88.93L860 90.5L840 91.95L820 93.26L800 94.45L780 95.52L760 96.45L740 97.25L720 97.91L700 98.43L680 98.82L660 99.08L640 99.21L620 99.23L600 99.16L580 99.01L560 98.77L540 98.45L520 98.05L500 97.57L480 97.01L460 96.37L440 95.66L420 94.88L400 94.03L380 93.09L360 92.07L340 90.94L320 89.69L300 88.31L280 86.77L260 85.04L240 83.11L220 80.92L200 78.45L180 75.66L160 72.49L140 68.89L120 64.77L100 60.03L80 54.51L60 47.96L40 39.87L20 28.8L0 0.48Z'/%3E%3C/svg%3E") bottom / 100% var(--banner-curve) no-repeat;
+  -webkit-mask: linear-gradient(#000, #000) top / 100% calc(100% - var(--banner-curve) + 1px) no-repeat, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 100' preserveAspectRatio='none'%3E%3Cpath fill='%23000' d='M0 0H1200V25L1180 28.93L1160 32.84L1140 36.73L1120 40.59L1100 44.41L1080 48.18L1060 51.88L1040 55.51L1020 59.05L1000 62.50L980 65.85L960 69.08L940 72.20L920 75.18L900 78.03L880 80.74L860 83.29L840 85.68L820 87.90L800 89.95L780 91.83L760 93.52L740 95.02L720 96.33L700 97.44L680 98.36L660 99.08L640 99.59L620 99.90L600 100.00L580 99.90L560 99.59L540 99.08L520 98.36L500 97.44L480 96.33L460 95.02L440 93.52L420 91.83L400 89.95L380 87.90L360 85.68L340 83.29L320 80.74L300 78.03L280 75.18L260 72.20L240 69.08L220 65.85L200 62.50L180 59.05L160 55.51L140 51.88L120 48.18L100 44.41L80 40.59L60 36.73L40 32.84L20 28.93L0 25.00Z'/%3E%3C/svg%3E") bottom / 100% var(--banner-curve) no-repeat;
+  mask: linear-gradient(#000, #000) top / 100% calc(100% - var(--banner-curve) + 1px) no-repeat, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 100' preserveAspectRatio='none'%3E%3Cpath fill='%23000' d='M0 0H1200V25L1180 28.93L1160 32.84L1140 36.73L1120 40.59L1100 44.41L1080 48.18L1060 51.88L1040 55.51L1020 59.05L1000 62.50L980 65.85L960 69.08L940 72.20L920 75.18L900 78.03L880 80.74L860 83.29L840 85.68L820 87.90L800 89.95L780 91.83L760 93.52L740 95.02L720 96.33L700 97.44L680 98.36L660 99.08L640 99.59L620 99.90L600 100.00L580 99.90L560 99.59L540 99.08L520 98.36L500 97.44L480 96.33L460 95.02L440 93.52L420 91.83L400 89.95L380 87.90L360 85.68L340 83.29L320 80.74L300 78.03L280 75.18L260 72.20L240 69.08L220 65.85L200 62.50L180 59.05L160 55.51L140 51.88L120 48.18L100 44.41L80 40.59L60 36.73L40 32.84L20 28.93L0 25.00Z'/%3E%3C/svg%3E") bottom / 100% var(--banner-curve) no-repeat;
 }
 
 /* Mobile menu: clear the overhanging logo before the first link */
@@ -640,3 +640,15 @@ body.header-solid .site-header::after {
 
 /* Brighter header illustration on the pink hero (Children's activities) */
 .page-hero--pink .page-hero__art { filter: saturate(1.4) contrast(1.12) brightness(1.04); }
+
+/* Shop: gap under the sorting dropdown (matters on phones, where the product grid sits right below it) */
+.woocommerce-ordering { margin: 0 0 1.5rem; }
+
+/* Art gallery: pictures float on the page, no frame or card */
+.art-card, .art-card:nth-child(n) { background: transparent; border: 0; border-radius: 0; overflow: visible; }
+.art-card:hover { box-shadow: none; transform: translateY(-3px); }
+.art-card__link img { aspect-ratio: auto; height: auto; object-fit: contain; }
+.art-card__body { padding: 0.75rem 0 0; text-align: center; }
+
+/* Postage notice (cart, checkout, product page) */
+.cm-post-days { margin: 1rem 0; padding: 0.6rem 1rem; background: var(--blue-soft); border-radius: var(--radius); font-weight: 700; }

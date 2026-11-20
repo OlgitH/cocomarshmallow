@@ -2,21 +2,22 @@
 <footer class="site-footer">
     <div class="container container--wide site-footer__grid">
         <section class="footer-col footer-col--about" aria-labelledby="footer-about">
-            <h2 id="footer-about" class="footer-title"><?php bloginfo('name'); ?></h2>
-            <p><?php echo esc_html(trim((string) cm_field('footer_blurb', 'option')) ?: get_bloginfo('description') ?: 'Gentle, joyful picture books that help little ones understand their feelings. Written and illustrated in Bath.'); ?></p>
+            <h2 id="footer-about" class="footer-title">Coco Marshmallow Books</h2>
+            <p><?php echo esc_html(trim((string) cm_field('footer_blurb', 'option')) ?: 'Gentle picture books promoting early emotional intelligence through stories and mindfulness activities. By Bath author Lysha Goode and Illustrator Amy Chandler.'); ?></p>
             <?php echo cm_follow_us('follow-block--footer'); ?>
         </section>
 
         <nav class="footer-col" aria-labelledby="footer-explore">
             <h2 id="footer-explore" class="footer-title"><?php esc_html_e('Explore', 'cocomarshmallow'); ?></h2>
             <?php wp_nav_menu(['theme_location' => 'footer', 'container' => false, 'menu_class' => 'footer-menu', 'fallback_cb' => 'cm_default_menu', 'depth' => 1]); ?>
+            <?php if ($postage = cm_postage_url()) : ?><ul class="footer-menu"><li class="menu-item"><a href="<?php echo esc_url($postage); ?>"><?php esc_html_e('Postage and delivery', 'cocomarshmallow'); ?></a></li></ul><?php endif; ?>
         </nav>
 
         <section class="footer-col" aria-labelledby="footer-contact">
             <h2 id="footer-contact" class="footer-title"><?php esc_html_e('Get in touch', 'cocomarshmallow'); ?></h2>
             <address class="footer-address">
                 <?php $loc = cm_field('contact_location', 'option') ?: 'Bath, Somerset'; ?>
-                <?php $mail = cm_field('contact_email', 'option') ?: (defined('MAIL_FROM_ADDRESS') ? MAIL_FROM_ADDRESS : ''); ?>
+                <?php $mail = cm_contact_email(); ?>
                 <span><?php echo esc_html($loc); ?></span><br>
                 <?php if ($mail) : ?><a href="mailto:<?php echo esc_attr(antispambot($mail)); ?>"><?php echo esc_html(antispambot($mail)); ?></a><?php endif; ?>
             </address>

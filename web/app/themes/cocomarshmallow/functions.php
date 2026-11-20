@@ -16,3 +16,4 @@ require_once __DIR__ . '/inc/menu-migration.php';
 require_once __DIR__ . '/inc/contact-form.php';
 require_once __DIR__ . '/inc/downloads.php';
 require_once __DIR__ . '/inc/woocommerce.php';
+require_once __DIR__ . '/inc/postage.php';

@@ -3,7 +3,7 @@
 defined('ABSPATH') || exit;
 get_header();
 $status = isset($_GET['cm_sent']) ? 'sent' : (isset($_GET['cm_error']) ? sanitize_key($_GET['cm_error']) : '');
-$mail   = cm_field('contact_email', 'option');
+$mail   = cm_contact_email();
 $loc    = cm_field('contact_location', 'option') ?: 'Bath, Somerset';
 ?>
 <main id="main" tabindex="-1">
@@ -20,6 +20,7 @@ $loc    = cm_field('contact_location', 'option') ?: 'Bath, Somerset';
             <p><strong><?php esc_html_e('Based in', 'cocomarshmallow'); ?></strong> <?php echo esc_html($loc); ?></p>
             <?php if ($mail) : ?><p><a href="mailto:<?php echo esc_attr(antispambot($mail)); ?>"><?php echo esc_html(antispambot($mail)); ?></a></p><?php endif; ?>
             <?php echo cm_follow_us(); ?>
+            <p><?php esc_html_e('You can follow us on Facebook and Instagram @cocomarshmallowbooks.', 'cocomarshmallow'); ?></p>
         </div>
 
         <form id="contact-form" class="form" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" novalidate>

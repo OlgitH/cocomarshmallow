@@ -52,7 +52,7 @@ add_action('init', static function () {
     $children = [
         ['Children’s activities', get_permalink($acts_page)],
         ['Children’s art gallery', $gal_id ? get_permalink($gal_id) : ''],
-        ['Resources for nurseries', $nur ? get_permalink($nur) : ''],
+        ['Resources for nurseries and preschools', $nur ? get_permalink($nur) : ''],
     ];
     $pos = 1;
     foreach ($children as [$title, $url]) {

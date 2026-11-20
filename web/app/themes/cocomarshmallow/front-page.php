@@ -35,7 +35,7 @@ $t = static fn (string $key, string $default) => trim((string) cm_field($key)) !
                 <?php else : ?>
                     <p class="hero__label"><?php echo esc_html($t('home_latest_label', 'Latest book')); ?></p>
                     <h2 class="hero__title">Happiness</h2>
-                    <p class="hero__blurb"><?php esc_html_e('Join Coco Marshmallow on a gentle adventure to discover what happiness feels like, with a fun mindfulness activity inside.', 'cocomarshmallow'); ?></p>
+                    <p class="hero__blurb"><?php esc_html_e('Join Coco Marshmallow on a gentle adventure to discover what happiness feels like, with a fun mindfulness activity inside and free colouring sheets.', 'cocomarshmallow'); ?></p>
                     <p class="hero__actions"><a class="button button--light" href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/shop/')); ?>"><?php esc_html_e('Buy now', 'cocomarshmallow'); ?></a></p>
                 <?php endif; ?>
             </div>

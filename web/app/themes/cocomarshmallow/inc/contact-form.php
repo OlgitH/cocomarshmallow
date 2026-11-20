@@ -7,7 +7,7 @@ function cm_contact_recipient(): string
     if (defined('CONTACT_FORM_RECIPIENT')) {
         return CONTACT_FORM_RECIPIENT;
     }
-    return cm_field('contact_email', 'option') ?: get_option('admin_email');
+    return cm_contact_email();
 }
 
 function cm_handle_contact(): void

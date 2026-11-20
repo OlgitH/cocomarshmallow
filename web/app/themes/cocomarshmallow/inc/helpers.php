@@ -13,6 +13,12 @@ function cm_field(string $name, $post_id = null)
     return get_post_meta($post_id ?: get_the_ID(), $name, true);
 }
 
+/** Public contact address (Site settings > Email, else the shared Gmail until a proper domain address is set up). */
+function cm_contact_email(): string
+{
+    return trim((string) cm_field('contact_email', 'option')) ?: 'cocomarshmallowbooks@gmail.com';
+}
+
 function cm_asset(string $path): string
 {
     return get_theme_file_uri('assets/' . ltrim($path, '/'));
