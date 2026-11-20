@@ -31,6 +31,7 @@
   --green-dark: #1e6b3a;    /* links on white (6.4:1) */
   --blue: #bcd8e8;          /* light blue: panels / footer (ink text 11:1) */
   --blue-soft: #e8f2f8;
+  --blue-mid: #d2e6f1;      /* between soft and light blue: footer */
   --ink: #2a2430;           /* body text (14.5:1 on white) */
   --ink-soft: #4d4655;      /* secondary text (8.7:1) */
   --purple: #4b2a72;        /* dark purple: backgrounds (white text 11:1) */
@@ -731,7 +732,7 @@ html, body { overflow-x: clip; }
   body.nav-open .site-header::after { display: none; } /* the wobbly header edge would show as a step beside the overlay */
 }
 
-/* Footer: a slightly deeper blue, so the reviews section's curved bottom edge flows straight into it (no white gap) */
-.site-footer { background: var(--blue); }
+/* Footer: a mid blue, so the reviews section's curved bottom edge flows straight into it (no white gap) */
+.site-footer { background: var(--blue-mid); }
 main:has(> .section--reviews:last-child) .section--reviews { margin-bottom: 0; }
 main:has(> .section--reviews:last-child) + .site-footer { margin-top: 0; padding-top: 2.5rem; }
