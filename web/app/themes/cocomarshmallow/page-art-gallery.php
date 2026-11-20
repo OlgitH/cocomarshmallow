@@ -39,7 +39,7 @@ get_header();
                     ?>
                     <li class="art-card">
                         <a class="art-card__link" href="<?php echo esc_url(wp_get_attachment_image_url($tid, 'full')); ?>" data-art-full="<?php echo esc_url(wp_get_attachment_image_url($tid, 'large')); ?>" data-art-alt="<?php echo esc_attr($alt); ?>">
-                            <?php echo wp_get_attachment_image($tid, 'cm-card', false, ['alt' => $alt, 'loading' => 'lazy']); ?>
+                            <?php echo wp_get_attachment_image($tid, 'large', false, ['alt' => $alt, 'loading' => 'lazy']); ?>
                             <span class="screen-reader-text"><?php esc_html_e('View larger', 'cocomarshmallow'); ?></span>
                         </a>
                         <div class="art-card__body">
