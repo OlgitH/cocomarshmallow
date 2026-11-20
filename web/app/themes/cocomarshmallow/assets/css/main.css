@@ -730,3 +730,8 @@ html, body { overflow-x: clip; }
   body.nav-open.header-solid .site-header .primary-nav { padding-top: 3.5rem; }
   body.nav-open .site-header::after { display: none; } /* the wobbly header edge would show as a step beside the overlay */
 }
+
+/* Footer: a slightly deeper blue, so the reviews section's curved bottom edge flows straight into it (no white gap) */
+.site-footer { background: var(--blue); }
+main:has(> .section--reviews:last-child) .section--reviews { margin-bottom: 0; }
+main:has(> .section--reviews:last-child) + .site-footer { margin-top: 0; padding-top: 2.5rem; }
