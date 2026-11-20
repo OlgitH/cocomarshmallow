@@ -70,8 +70,14 @@ add_action('acf/init', static function () {
         'location' => [[['param' => 'post_type', 'operator' => '==', 'value' => 'product']]],
         'position' => 'normal',
         'fields'   => [
-            ['key' => 'field_cm_show_in_hero', 'label' => 'Feature in homepage hero', 'name' => 'show_in_hero', 'type' => 'true_false', 'ui' => 1,
-             'instructions' => 'Tick for the book shown at the top of the homepage. If none is ticked, the newest book is used.'],
+            ['key' => 'field_cm_show_in_hero', 'label' => 'Appear in homepage carousel', 'name' => 'show_in_hero', 'type' => 'true_false', 'ui' => 1,
+             'instructions' => 'Tick to show this book in the carousel at the top of the homepage.'],
+            ['key' => 'field_cm_is_latest', 'label' => 'Latest book', 'name' => 'is_latest_book', 'type' => 'true_false', 'ui' => 1,
+             'instructions' => 'The latest book comes first in the carousel. Only one book can be the latest: choosing this clears it from the others.'],
+            ['key' => 'field_cm_coming_soon', 'label' => 'Coming soon', 'name' => 'coming_soon', 'type' => 'true_false', 'ui' => 1,
+             'instructions' => 'Shows “Coming soon” instead of the price and the Add to basket button. Untick when the book is ready to sell.'],
+            ['key' => 'field_cm_carousel_image', 'label' => 'Carousel image (optional)', 'name' => 'carousel_image', 'type' => 'image', 'return_format' => 'id', 'preview_size' => 'medium',
+             'instructions' => 'Square cover image for the homepage carousel. Leave empty to use the product image (or a “Cover coming soon” placeholder).'],
             ['key' => 'field_cm_blurb', 'label' => 'Blurb', 'name' => 'book_blurb', 'type' => 'textarea', 'rows' => 5, 'new_lines' => 'br',
              'instructions' => 'Shown in the hero and on book cards. Falls back to the short description.'],
             ['key' => 'field_cm_author', 'label' => 'Written by', 'name' => 'book_author', 'type' => 'text'],
@@ -150,8 +156,9 @@ add_action('add_meta_boxes', static function () {
             printf('<p><label><strong>%s</strong><br><input type="text" class="widefat" name="%s" value="%s"></label></p>',
                 esc_html($label), esc_attr($key), esc_attr(get_post_meta($post->ID, $key, true)));
         }
-        printf('<p><label><input type="checkbox" name="show_in_hero" value="1" %s> Feature in homepage hero</label></p>',
-            checked(get_post_meta($post->ID, 'show_in_hero', true), '1', false));
+        foreach (['show_in_hero' => 'Appear in homepage carousel', 'is_latest_book' => 'Latest book (comes first)', 'coming_soon' => 'Coming soon'] as $key => $label) {
+            printf('<p><label><input type="checkbox" name="%s" value="1" %s> %s</label></p>', esc_attr($key), checked(get_post_meta($post->ID, $key, true), '1', false), esc_html($label));
+        }
     }, 'product');
     add_meta_box('cm_activity_fallback', 'Activity download', static function ($post) {
         wp_nonce_field('cm_fallback', 'cm_fallback_nonce');
@@ -194,7 +201,9 @@ add_action('save_post', static function ($post_id) {
         }
     }
     if (get_post_type($post_id) === 'product') {
-        update_post_meta($post_id, 'show_in_hero', empty($_POST['show_in_hero']) ? '' : '1');
+        foreach (['show_in_hero', 'is_latest_book', 'coming_soon'] as $key) {
+            update_post_meta($post_id, $key, empty($_POST[$key]) ? '' : '1');
+        }
     }
 });
 

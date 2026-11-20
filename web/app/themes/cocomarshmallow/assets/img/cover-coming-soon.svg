@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 726" role="img" aria-label="Cover coming soon">
+<rect width="720" height="726" fill="#a8dcf6"/>
+<rect x="36" y="36" width="648" height="654" rx="28" fill="none" stroke="#fff" stroke-width="8" stroke-dasharray="4 22" stroke-linecap="round"/>
+<circle cx="360" cy="290" r="96" fill="#fff" opacity=".7"/>
+<path d="M312 262l18 30 30-44 30 44 18-30v66a48 48 0 0 1-96 0z" fill="#4b2a72" opacity=".85"/>
+<text x="360" y="486" text-anchor="middle" font-family="'Libre Caslon Text',Georgia,serif" font-size="54" font-weight="700" fill="#331a55">Cover</text>
+<text x="360" y="552" text-anchor="middle" font-family="'Libre Caslon Text',Georgia,serif" font-size="54" font-weight="700" fill="#331a55">coming soon</text>
+</svg>

@@ -23,6 +23,9 @@ function cm_postage_url(): string
 
 function cm_postage_notice(): void
 {
+    if (function_exists('is_product') && is_product() && cm_is_coming_soon(get_the_ID())) {
+        return;
+    }
     $url = cm_postage_url();
     echo '<p class="cm-post-days">' . esc_html__('We post out on a Monday and Thursday each week.', 'cocomarshmallow');
     if ($url) {

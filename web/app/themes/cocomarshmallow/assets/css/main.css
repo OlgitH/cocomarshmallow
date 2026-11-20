@@ -686,3 +686,21 @@ body:has(:is(.page-hero--pink, .hero--top).swatch--light) .cart-link__count { ba
   body:has(:is(.page-hero--pink, .hero--top).swatch--light) .primary-nav a[aria-current] { background: rgb(0 0 0 / 0.1); color: var(--ink); }
   body:has(:is(.page-hero--pink, .hero--top).swatch--light) .primary-nav a:hover { color: var(--ink); }
 }
+
+/* ---- Homepage carousel ---------------------------------------------------- */
+.hero > .container > .hero__kicker { margin-bottom: 1.5rem; }
+.carousel__track { display: flex; margin: 0; padding: 0; list-style: none; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
+.carousel__track::-webkit-scrollbar { display: none; }
+.carousel__slide { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; display: flex; align-items: center; }
+.carousel__slide > .container { width: min(100% - 2 * var(--gutter), 74rem); }
+.carousel__controls { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 2rem; }
+.carousel__btn { width: 2.75rem; height: 2.75rem; border-radius: 50%; border: 2px solid var(--sw-fg, var(--white)); background: transparent; color: var(--sw-fg, var(--white)); font: 700 1.25rem/1 var(--font-serif); cursor: pointer; }
+.carousel__btn:hover { background: var(--sw-fg, var(--white)); color: var(--sw-bg, var(--pink-dark)); }
+.carousel__dots { display: flex; gap: 0.6rem; margin: 0; padding: 0; list-style: none; }
+.carousel__dot { width: 0.9rem; height: 0.9rem; padding: 0; border-radius: 50%; border: 2px solid var(--sw-fg, var(--white)); background: transparent; cursor: pointer; }
+.carousel__dot[aria-current="true"] { background: var(--sw-fg, var(--white)); }
+.hero__cover--placeholder { background: var(--sky); }
+.button--static { cursor: default; pointer-events: none; }
+.coming-soon { display: inline-block; font-weight: 700; color: var(--purple-dark); }
+@media (prefers-reduced-motion: reduce) { .carousel__track { scroll-behavior: auto; } }
+@media (prefers-reduced-motion: no-preference) { .carousel__track { scroll-behavior: smooth; } }

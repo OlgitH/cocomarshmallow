@@ -34,19 +34,89 @@ add_filter('woocommerce_add_to_cart_fragments', static function ($fragments) {
     return $fragments;
 });
 
-/** The book shown in the homepage hero: flagged book, else the newest. */
-function cm_hero_product(): ?WC_Product
+/** Whether a book is flagged "Coming soon" (no price, no Add to basket). */
+function cm_is_coming_soon($product): bool
+{
+    $id = $product instanceof WC_Product ? $product->get_id() : (int) $product;
+    return (string) get_post_meta($id, 'coming_soon', true) === '1';
+}
+
+/** Books in the homepage carousel: the "Latest book" first, then the rest newest first. Falls back to the newest book. */
+function cm_carousel_products(): array
 {
     if (!function_exists('wc_get_products')) {
-        return null;
+        return [];
     }
-    $flagged = wc_get_products(['limit' => 1, 'status' => 'publish', 'meta_key' => 'show_in_hero', 'meta_value' => '1', 'orderby' => 'date', 'order' => 'DESC']);
-    if ($flagged) {
-        return $flagged[0];
+    $books = wc_get_products(['limit' => 12, 'status' => 'publish', 'meta_key' => 'show_in_hero', 'meta_value' => '1', 'orderby' => 'date', 'order' => 'DESC']);
+    if (!$books) {
+        $books = wc_get_products(['limit' => 1, 'status' => 'publish', 'orderby' => 'date', 'order' => 'DESC']);
     }
-    $latest = wc_get_products(['limit' => 1, 'status' => 'publish', 'orderby' => 'date', 'order' => 'DESC']);
-    return $latest ? $latest[0] : null;
+    usort($books, static fn ($a, $b) => (int) (get_post_meta($b->get_id(), 'is_latest_book', true) === '1') <=> (int) (get_post_meta($a->get_id(), 'is_latest_book', true) === '1'));
+    return $books;
 }
+
+/** The first carousel book (kept for anything that wants a single hero book). */
+function cm_hero_product(): ?WC_Product
+{
+    $books = cm_carousel_products();
+    return $books ? $books[0] : null;
+}
+
+/** Only one book can be the latest: ticking it on one clears it from the others. */
+add_action('save_post_product', static function ($post_id) {
+    if (wp_is_post_revision($post_id) || get_post_meta($post_id, 'is_latest_book', true) !== '1') {
+        return;
+    }
+    foreach (get_posts(['post_type' => 'product', 'post_status' => 'any', 'posts_per_page' => -1, 'fields' => 'ids', 'exclude' => [$post_id], 'meta_key' => 'is_latest_book', 'meta_value' => '1']) as $other) {
+        update_post_meta($other, 'is_latest_book', '');
+    }
+}, 99);
+
+/** Coming soon: not purchasable, and "Coming soon" replaces the price. */
+add_filter('woocommerce_is_purchasable', static fn ($ok, $product) => cm_is_coming_soon($product) ? false : $ok, 10, 2);
+add_filter('woocommerce_get_price_html', static fn ($html, $product) => cm_is_coming_soon($product) ? '<span class="coming-soon">' . esc_html__('Coming soon', 'cocomarshmallow') . '</span>' : $html, 10, 2);
+
+/** Books without a cover yet show a "Cover coming soon" picture. */
+add_filter('woocommerce_placeholder_img_src', static fn () => cm_asset('img/cover-coming-soon.svg'));
+
+/**
+ * One-off: add the Bravery book (coming soon) and make sure the existing books are in the carousel,
+ * with the newest existing book marked as the latest. Never runs twice, so later edits in the dashboard stick.
+ */
+add_action('init', static function () {
+    if (get_option('cm_bravery_v1') || !class_exists('WC_Product_Simple')) {
+        return;
+    }
+    update_option('cm_bravery_v1', 1);
+    $existing = wc_get_products(['limit' => -1, 'status' => 'publish', 'orderby' => 'date', 'order' => 'DESC']);
+    foreach ($existing as $i => $book) {
+        if (get_post_meta($book->get_id(), 'show_in_hero', true) === '') {
+            update_post_meta($book->get_id(), 'show_in_hero', '1');
+        }
+    }
+    if ($existing && !get_posts(['post_type' => 'product', 'post_status' => 'any', 'posts_per_page' => 1, 'fields' => 'ids', 'meta_key' => 'is_latest_book', 'meta_value' => '1'])) {
+        update_post_meta($existing[0]->get_id(), 'is_latest_book', '1');
+    }
+    foreach ($existing as $book) {
+        if (strcasecmp($book->get_name(), 'Bravery') === 0) {
+            return; // already added by hand
+        }
+    }
+    $blurb = 'In this second book, we meet new friends who help Coco Marshmallow learn that being brave doesn’t mean you never feel afraid, but that being brave means trying even when you do. Discover another mindfulness activity and colouring sheets to enjoy!';
+    $p = new WC_Product_Simple();
+    $p->set_name('Bravery');
+    $p->set_slug('bravery');
+    $p->set_status('publish');
+    $p->set_catalog_visibility('visible');
+    $p->set_short_description($blurb);
+    $p->set_description($blurb);
+    $id = $p->save();
+    if ($id) {
+        update_post_meta($id, 'book_blurb', $blurb);
+        update_post_meta($id, 'show_in_hero', '1');
+        update_post_meta($id, 'coming_soon', '1');
+    }
+}, 35);
 
 /** "Buy now": add to cart and go straight to checkout for simple products. */
 function cm_buy_now_url(WC_Product $product): string

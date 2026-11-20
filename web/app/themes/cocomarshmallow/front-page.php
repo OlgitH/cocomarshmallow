@@ -3,7 +3,6 @@
 defined('ABSPATH') || exit;
 get_header();
 
-$hero        = cm_hero_product();
 $show_banner = cm_show_banner();
 $t = static fn (string $key, string $default) => trim((string) cm_field($key)) !== '' ? trim((string) cm_field($key)) : $default;
 ?>
@@ -13,44 +12,80 @@ $t = static fn (string $key, string $default) => trim((string) cm_field($key)) !
     <div class="page-hero home-banner" role="img" aria-label="<?php esc_attr_e('The Adventures of Coco Marshmallow: promoting early emotional intelligence', 'cocomarshmallow'); ?>"></div>
     <?php endif; ?>
 
+    <?php
+    $books    = cm_carousel_products();
+    $shop_url = function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/shop/');
+    $count    = max(1, count($books));
+    ?>
     <section class="hero<?php echo ($show_banner ? '' : ' hero--top') . cm_hero_swatch(); ?>" aria-labelledby="hero-heading">
-        <div class="container container--wide hero__inner">
-            <div class="hero__text">
-                <h1 id="hero-heading" class="hero__kicker"><?php echo esc_html($t('home_kicker', 'Children’s author and illustrator in Bath')); ?></h1>
-                <?php if ($hero) :
-                    $hid   = $hero->get_id();
-                    $blurb = cm_field('book_blurb', $hid) ?: wp_strip_all_tags($hero->get_short_description());
-                    ?>
-                    <p class="hero__label"><?php echo esc_html($t('home_latest_label', 'Latest book')); ?></p>
-                    <h2 class="hero__title"><?php echo esc_html($hero->get_name()); ?></h2>
-                    <?php if ($blurb) : ?><p class="hero__blurb"><?php echo wp_kses_post(nl2br(esc_html($blurb))); ?></p><?php endif; ?>
-                    <p class="hero__actions">
-                        <a class="button button--light" href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/shop/')); ?>">
-                            <?php esc_html_e('Buy now', 'cocomarshmallow'); ?><span class="screen-reader-text">: <?php echo esc_html($hero->get_name()); ?></span>
-                        </a>
-                        <a class="button button--ghost" href="<?php echo esc_url($hero->get_permalink()); ?>">
-                            <?php esc_html_e('Read more', 'cocomarshmallow'); ?><span class="screen-reader-text">: <?php echo esc_html($hero->get_name()); ?></span>
-                        </a>
-                    </p>
-                <?php else : ?>
-                    <p class="hero__label"><?php echo esc_html($t('home_latest_label', 'Latest book')); ?></p>
-                    <h2 class="hero__title">Happiness</h2>
-                    <p class="hero__blurb"><?php esc_html_e('Join Coco Marshmallow on a gentle adventure to discover what happiness feels like, with a fun mindfulness activity inside and free colouring sheets.', 'cocomarshmallow'); ?></p>
-                    <p class="hero__actions"><a class="button button--light" href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/shop/')); ?>"><?php esc_html_e('Buy now', 'cocomarshmallow'); ?></a></p>
-                <?php endif; ?>
+        <div class="container container--wide">
+            <h1 id="hero-heading" class="hero__kicker"><?php echo esc_html($t('home_kicker', 'Children’s author and illustrator in Bath')); ?></h1>
+        </div>
+        <div class="carousel" data-carousel role="group" aria-roledescription="carousel" aria-label="<?php esc_attr_e('Our books', 'cocomarshmallow'); ?>">
+            <ul class="carousel__track" role="list">
+            <?php if ($books) : foreach ($books as $i => $book) :
+                $bid    = $book->get_id();
+                $soon   = cm_is_coming_soon($book);
+                $blurb  = cm_field('book_blurb', $bid) ?: wp_strip_all_tags($book->get_short_description());
+                $img_id = (int) cm_field('carousel_image', $bid) ?: (int) $book->get_image_id();
+                $is_latest = get_post_meta($bid, 'is_latest_book', true) === '1';
+                ?>
+                <li class="carousel__slide" role="group" aria-roledescription="slide" aria-label="<?php echo esc_attr(sprintf(__('%1$d of %2$d', 'cocomarshmallow'), $i + 1, $count)); ?>">
+                    <div class="container container--wide hero__inner">
+                        <div class="hero__text">
+                            <p class="hero__label"><?php echo esc_html($soon ? __('Coming soon', 'cocomarshmallow') : ($is_latest ? $t('home_latest_label', 'Latest book') : __('Book', 'cocomarshmallow'))); ?></p>
+                            <h2 class="hero__title"><?php echo esc_html($book->get_name()); ?></h2>
+                            <?php if ($blurb) : ?><p class="hero__blurb"><?php echo wp_kses_post(nl2br(esc_html($blurb))); ?></p><?php endif; ?>
+                            <p class="hero__actions">
+                                <?php if ($soon) : ?>
+                                    <span class="button button--light button--static"><?php esc_html_e('Coming soon', 'cocomarshmallow'); ?></span>
+                                <?php else : ?>
+                                    <a class="button button--light" href="<?php echo esc_url($shop_url); ?>"><?php esc_html_e('Buy now', 'cocomarshmallow'); ?><span class="screen-reader-text">: <?php echo esc_html($book->get_name()); ?></span></a>
+                                <?php endif; ?>
+                                <a class="button button--ghost" href="<?php echo esc_url($book->get_permalink()); ?>"><?php esc_html_e('Read more', 'cocomarshmallow'); ?><span class="screen-reader-text">: <?php echo esc_html($book->get_name()); ?></span></a>
+                            </p>
+                        </div>
+                        <div class="hero__media">
+                            <?php if ($img_id) : ?>
+                                <?php echo wp_get_attachment_image($img_id, 'cm-book', false, [
+                                    'class' => 'hero__cover', 'loading' => $i ? 'lazy' : 'eager', 'fetchpriority' => $i ? 'low' : 'high',
+                                    'alt' => sprintf(__('Cover of %s', 'cocomarshmallow'), $book->get_name()),
+                                ]); ?>
+                            <?php else : ?>
+                                <img class="hero__cover hero__cover--placeholder" src="<?php echo esc_url(cm_asset('img/cover-coming-soon.svg')); ?>" width="720" height="726" loading="<?php echo $i ? 'lazy' : 'eager'; ?>"
+                                     alt="<?php echo esc_attr(sprintf(__('%s: cover coming soon', 'cocomarshmallow'), $book->get_name())); ?>">
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </li>
+            <?php endforeach; else : ?>
+                <li class="carousel__slide" role="group" aria-roledescription="slide" aria-label="1 of 1">
+                    <div class="container container--wide hero__inner">
+                        <div class="hero__text">
+                            <p class="hero__label"><?php echo esc_html($t('home_latest_label', 'Latest book')); ?></p>
+                            <h2 class="hero__title">Happiness</h2>
+                            <p class="hero__blurb"><?php esc_html_e('Join Coco Marshmallow on a gentle adventure to discover what happiness feels like, with a fun mindfulness activity inside and free colouring sheets.', 'cocomarshmallow'); ?></p>
+                            <p class="hero__actions"><a class="button button--light" href="<?php echo esc_url($shop_url); ?>"><?php esc_html_e('Buy now', 'cocomarshmallow'); ?></a></p>
+                        </div>
+                        <div class="hero__media">
+                            <img class="hero__cover" src="<?php echo esc_url(cm_asset('img/happiness-cover.jpg')); ?>" width="720" height="726" fetchpriority="high"
+                                 alt="<?php esc_attr_e('Cover of Happiness: Coco Marshmallow the cat balancing on one leg among colourful bushes', 'cocomarshmallow'); ?>">
+                        </div>
+                    </div>
+                </li>
+            <?php endif; ?>
+            </ul>
+            <?php if (count($books) > 1) : ?>
+            <div class="carousel__controls">
+                <button type="button" class="carousel__btn" data-carousel-prev aria-label="<?php esc_attr_e('Previous book', 'cocomarshmallow'); ?>"><span aria-hidden="true">←</span></button>
+                <ul class="carousel__dots" role="list">
+                    <?php foreach ($books as $i => $book) : ?>
+                        <li><button type="button" class="carousel__dot" data-carousel-dot="<?php echo (int) $i; ?>" aria-label="<?php echo esc_attr(sprintf(__('Show %s', 'cocomarshmallow'), $book->get_name())); ?>"<?php echo $i === 0 ? ' aria-current="true"' : ''; ?>></button></li>
+                    <?php endforeach; ?>
+                </ul>
+                <button type="button" class="carousel__btn" data-carousel-next aria-label="<?php esc_attr_e('Next book', 'cocomarshmallow'); ?>"><span aria-hidden="true">→</span></button>
             </div>
-
-            <div class="hero__media">
-                <?php if ($hero && $hero->get_image_id()) : ?>
-                    <?php echo wp_get_attachment_image($hero->get_image_id(), 'cm-book', false, [
-                        'class' => 'hero__cover', 'loading' => 'eager', 'fetchpriority' => 'high',
-                        'alt' => sprintf(__('Cover of %s', 'cocomarshmallow'), $hero->get_name()),
-                    ]); ?>
-                <?php else : ?>
-                    <img class="hero__cover" src="<?php echo esc_url(cm_asset('img/happiness-cover.jpg')); ?>" width="720" height="726" fetchpriority="high"
-                         alt="<?php esc_attr_e('Cover of Happiness: Coco Marshmallow the cat balancing on one leg among colourful bushes', 'cocomarshmallow'); ?>">
-                <?php endif; ?>
-            </div>
+            <?php endif; ?>
         </div>
     </section>
 
