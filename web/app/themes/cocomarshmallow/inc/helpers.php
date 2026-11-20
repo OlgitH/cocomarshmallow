@@ -54,6 +54,39 @@ function cm_show_banner($post_id = null): bool
     return (bool) (int) $raw;
 }
 
+/**
+ * Brand colour swatches (see the .swatch--* classes in main.css). slug => label.
+ * Reusable: add a slug here + a .swatch--slug rule in the CSS and it is available everywhere.
+ */
+function cm_swatches(): array
+{
+    return [
+        'pink'   => 'Pink (default)',
+        'purple' => 'Dark purple',
+        'green'  => 'Dark green',
+        'orange' => 'Orange',
+        'lime'   => 'Light green',
+        'blue'   => 'Light blue',
+        'sky'    => 'Sky blue',
+    ];
+}
+
+/** CSS classes for a swatch slug, e.g. ' swatch--purple'. Light swatches also get ' swatch--light'. */
+function cm_swatch_class(?string $slug): string
+{
+    $slug = (string) $slug;
+    if (!isset(cm_swatches()[$slug])) {
+        $slug = 'pink';
+    }
+    return ' swatch--' . $slug . (in_array($slug, ['orange', 'lime', 'blue', 'sky'], true) ? ' swatch--light' : '');
+}
+
+/** Hero colour chosen on a page (Pages > Header colour), as CSS classes. */
+function cm_hero_swatch(?int $post_id = null): string
+{
+    return cm_swatch_class((string) get_post_meta($post_id ?: get_the_ID(), 'hero_colour', true));
+}
+
 /** Social links from the Site Settings options page. */
 function cm_social_links(): array
 {

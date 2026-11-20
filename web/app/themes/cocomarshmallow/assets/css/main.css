@@ -33,6 +33,9 @@
   --blue-soft: #e8f2f8;
   --ink: #2a2430;           /* body text (14.5:1 on white) */
   --ink-soft: #4d4655;      /* secondary text (8.7:1) */
+  --purple: #4b2a72;        /* dark purple: backgrounds (white text 11:1) */
+  --purple-dark: #331a55;   /* purple text / hover on white */
+  --sky: #a8dcf6;           /* light sky blue: backgrounds (ink text 11:1) */
   --white: #fff;
   --cream: #fffbef;
 
@@ -652,3 +655,34 @@ body.header-solid .site-header::after {
 
 /* Postage notice (cart, checkout, product page) */
 .cm-post-days { margin: 1rem 0; padding: 0.6rem 1rem; background: var(--blue-soft); border-radius: var(--radius); font-weight: 700; }
+
+/* ---- Colour swatches ------------------------------------------------------
+   Reusable: add .swatch--{name} to any block to give it a brand background with readable text.
+   Light swatches also carry .swatch--light (dark text). Set from Pages > "Header colour" (cm_swatches() in inc/helpers.php).
+   Variables: --sw-bg background, --sw-fg text, --sw-ink accent text on white buttons, --sw-btn / --sw-btn-fg solid button. */
+.swatch--pink   { --sw-bg: var(--pink);   --sw-fg: var(--white); --sw-ink: var(--pink-dark);   --sw-btn: var(--white); --sw-btn-fg: var(--pink-dark);   --sw-ring: var(--pink-dark); }
+.swatch--purple { --sw-bg: var(--purple); --sw-fg: var(--white); --sw-ink: var(--purple-dark); --sw-btn: var(--white); --sw-btn-fg: var(--purple-dark); --sw-ring: var(--purple-dark); }
+.swatch--green  { --sw-bg: var(--teal);   --sw-fg: var(--white); --sw-ink: var(--teal-dark);   --sw-btn: var(--white); --sw-btn-fg: var(--teal-dark);   --sw-ring: var(--teal-dark); }
+.swatch--light  { --sw-fg: var(--ink); --sw-ink: var(--ink); --sw-btn: var(--ink); --sw-btn-fg: var(--white); --sw-ring: var(--white); }
+.swatch--orange { --sw-bg: var(--orange); }
+.swatch--lime   { --sw-bg: var(--green); }
+.swatch--blue   { --sw-bg: var(--blue); }
+.swatch--sky    { --sw-bg: var(--sky); }
+
+/* Heroes follow the chosen swatch (pink when none is chosen) */
+.page-hero--pink, .hero { background: var(--sw-bg, var(--pink)); color: var(--sw-fg, var(--white)); }
+.page-hero--pink .page-hero__title, .page-hero--pink .page-hero__lead, .page-hero--pink .page-hero__lead a { color: var(--sw-fg, var(--white)); }
+.page-hero--pink .button, .hero .button--light { background: var(--sw-btn, var(--white)); border-color: var(--sw-btn, var(--white)); color: var(--sw-btn-fg, var(--pink-dark)); }
+.page-hero--pink .button--outline, .hero .button--ghost { background: transparent; border-color: var(--sw-fg, var(--white)); color: var(--sw-fg, var(--white)); }
+.hero .button--ghost:hover { background: var(--sw-fg, var(--white)); color: var(--sw-bg, var(--pink-dark)); }
+.hero__kicker { color: var(--sw-ink, var(--pink-dark)); }
+.page-hero--pink :focus-visible { box-shadow: 0 0 0 6px var(--sw-ring, var(--pink-dark)); outline-color: var(--sw-fg, var(--white)); }
+.hero :focus-visible { box-shadow: 0 0 0 6px var(--sw-ring, var(--pink-dark)); outline-color: var(--sw-fg, var(--white)); }
+/* Menu over a light swatch: dark text instead of white */
+body:has(:is(.page-hero--pink, .hero--top).swatch--light) .nav-toggle { color: var(--ink); }
+body:has(:is(.page-hero--pink, .hero--top).swatch--light) .cart-link__count { background: var(--ink); color: var(--white); }
+@media (min-width: 56em) {
+  body:has(:is(.page-hero--pink, .hero--top).swatch--light) .primary-nav a { color: var(--ink); }
+  body:has(:is(.page-hero--pink, .hero--top).swatch--light) .primary-nav a[aria-current] { background: rgb(0 0 0 / 0.1); color: var(--ink); }
+  body:has(:is(.page-hero--pink, .hero--top).swatch--light) .primary-nav a:hover { color: var(--ink); }
+}

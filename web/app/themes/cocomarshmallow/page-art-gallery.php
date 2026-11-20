@@ -8,7 +8,7 @@ get_header();
 ?>
 <main id="main" tabindex="-1">
     <?php while (have_posts()) : the_post(); ?>
-    <header class="page-hero page-hero--pink">
+    <header class="page-hero page-hero--pink<?php echo cm_hero_swatch(); ?>">
         <div class="container container--wide">
             <?php cm_breadcrumbs(); ?>
             <h1 class="page-hero__title"><?php the_title(); ?></h1>

@@ -4,7 +4,7 @@ get_header();
 while (have_posts()) : the_post(); ?>
 <main id="main" tabindex="-1">
     <article <?php post_class('entry'); ?>>
-        <header class="page-hero<?php echo cm_show_banner() ? '' : ' page-hero--pink'; ?>">
+        <header class="page-hero<?php echo cm_show_banner() ? '' : ' page-hero--pink' . cm_hero_swatch(); ?>">
             <div class="container container--narrow">
                 <?php cm_breadcrumbs(); ?>
                 <?php

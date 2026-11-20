@@ -13,7 +13,7 @@ $t = static fn (string $key, string $default) => trim((string) cm_field($key)) !
     <div class="page-hero home-banner" role="img" aria-label="<?php esc_attr_e('The Adventures of Coco Marshmallow: promoting early emotional intelligence', 'cocomarshmallow'); ?>"></div>
     <?php endif; ?>
 
-    <section class="hero<?php echo $show_banner ? '' : ' hero--top'; ?>" aria-labelledby="hero-heading">
+    <section class="hero<?php echo ($show_banner ? '' : ' hero--top') . cm_hero_swatch(); ?>" aria-labelledby="hero-heading">
         <div class="container container--wide hero__inner">
             <div class="hero__text">
                 <h1 id="hero-heading" class="hero__kicker"><?php echo esc_html($t('home_kicker', 'Children’s author and illustrator in Bath')); ?></h1>

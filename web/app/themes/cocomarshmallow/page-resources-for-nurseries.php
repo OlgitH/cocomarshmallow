@@ -11,7 +11,7 @@ $nf = static fn (string $k, string $d = '') => trim((string) cm_field($k)) !== '
 ?>
 <main id="main" tabindex="-1">
     <?php while (have_posts()) : the_post(); ?>
-    <header class="page-hero page-hero--pink">
+    <header class="page-hero page-hero--pink<?php echo cm_hero_swatch(); ?>">
         <div class="container container--wide page-hero__split">
             <div>
                 <?php cm_breadcrumbs(); ?>

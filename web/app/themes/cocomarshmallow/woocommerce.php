@@ -8,7 +8,7 @@ get_header();
     $banner_page = is_shop() ? wc_get_page_id('shop') : (is_page() ? get_the_ID() : 0);
     $pink_hero   = is_product() || ($banner_page > 0 && !cm_show_banner($banner_page));
     ?>
-    <header class="page-hero<?php echo $pink_hero ? ' page-hero--pink' : ''; ?>">
+    <header class="page-hero<?php echo $pink_hero ? ' page-hero--pink' . cm_hero_swatch($banner_page > 0 ? $banner_page : (int) wc_get_page_id('shop')) : ''; ?>">
         <div class="container container--wide">
             <?php cm_breadcrumbs(); ?>
             <?php $tag = is_product() ? 'p' : 'h1'; // the product template supplies its own H1 ?>

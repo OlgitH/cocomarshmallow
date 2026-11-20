@@ -31,6 +31,8 @@ add_action('acf/init', static function () {
         'fields'   => [
             ['key' => 'field_cm_show_banner', 'label' => 'Show illustrated banner', 'name' => 'show_banner', 'type' => 'true_false', 'ui' => 1, 'default_value' => 1,
              'instructions' => 'Off = plain pink header, like the Children’s activities page.'],
+            ['key' => 'field_cm_hero_colour', 'label' => 'Header colour', 'name' => 'hero_colour', 'type' => 'select', 'choices' => cm_swatches(), 'default_value' => 'pink', 'return_format' => 'value',
+             'instructions' => 'Background of the coloured header. Not used where the illustrated banner is shown (like About).'],
             ['key' => 'field_cm_banner_title', 'label' => 'Banner title (optional)', 'name' => 'banner_title', 'type' => 'text',
              'instructions' => 'Shown as the heading on the banner. Leave empty to use the page title.',
              'conditional_logic' => [[['field' => 'field_cm_show_banner', 'operator' => '==', 'value' => '1']]]],
