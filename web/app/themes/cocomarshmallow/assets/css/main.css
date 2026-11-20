@@ -734,5 +734,7 @@ html, body { overflow-x: clip; }
 
 /* Footer: a mid blue, so the reviews section's curved bottom edge flows straight into it (no white gap) */
 .site-footer { background: var(--blue-mid); }
-main:has(> .section--reviews:last-child) .section--reviews { margin-bottom: 0; }
-main:has(> .section--reviews:last-child) + .site-footer { margin-top: 0; padding-top: 2.5rem; }
+/* Any page ending in a coloured band (reviews, nursery call-to-action) flows straight into the footer along a curve */
+main > :is(.section--reviews, .cta-band):last-child { margin-bottom: 0; }
+main > .cta-band:last-child::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 2.5rem; background: inherit; clip-path: var(--arc-down); }
+main:has(> :is(.section--reviews, .cta-band):last-child) + .site-footer { margin-top: 0; padding-top: 2.5rem; }
