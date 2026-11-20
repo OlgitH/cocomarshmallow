@@ -19,10 +19,7 @@ $t = static fn (string $key, string $default) => trim((string) cm_field($key)) !
     $page_sw  = (string) get_post_meta(get_the_ID(), 'hero_colour', true);
     $slide_sw = static fn ($b) => cm_swatch_class((string) get_post_meta($b->get_id(), 'carousel_colour', true) ?: $page_sw); // each book's own colour, else the page's
     ?>
-    <section class="hero<?php echo ($show_banner ? '' : ' hero--top') . ($books ? $slide_sw($books[0]) : cm_swatch_class($page_sw)); ?>" aria-labelledby="hero-heading">
-        <div class="container container--wide">
-            <h1 id="hero-heading" class="hero__kicker"><?php echo esc_html($t('home_kicker', 'Children’s author and illustrator in Bath')); ?></h1>
-        </div>
+    <section class="hero<?php echo ($show_banner ? '' : ' hero--top') . ' hero--carousel' . ($books ? $slide_sw($books[0]) : cm_swatch_class($page_sw)); ?>" aria-labelledby="hero-heading">
         <div class="carousel" data-carousel role="group" aria-roledescription="carousel" aria-label="<?php esc_attr_e('Our books', 'cocomarshmallow'); ?>">
             <ul class="carousel__track" role="list">
             <?php if ($books) : foreach ($books as $i => $book) :
@@ -35,6 +32,7 @@ $t = static fn (string $key, string $default) => trim((string) cm_field($key)) !
                 <li class="carousel__slide<?php echo esc_attr($slide_sw($book)); ?>" data-swatch="<?php echo esc_attr(trim($slide_sw($book))); ?>" role="group" aria-roledescription="slide" aria-label="<?php echo esc_attr(sprintf(__('%1$d of %2$d', 'cocomarshmallow'), $i + 1, $count)); ?>">
                     <div class="container container--wide hero__inner">
                         <div class="hero__text">
+                            <<?php echo $i === 0 ? 'h1 id="hero-heading"' : 'p'; ?> class="hero__kicker"><?php echo esc_html($t('home_kicker', 'Children’s author and illustrator in Bath')); ?></<?php echo $i === 0 ? 'h1' : 'p'; ?>>
                             <p class="hero__label"><?php echo esc_html($soon ? __('Coming soon', 'cocomarshmallow') : ($is_latest ? $t('home_latest_label', 'Latest book') : __('Book', 'cocomarshmallow'))); ?></p>
                             <h2 class="hero__title"><?php echo esc_html($book->get_name()); ?></h2>
                             <?php if ($blurb) : ?><p class="hero__blurb"><?php echo wp_kses_post(nl2br(esc_html($blurb))); ?></p><?php endif; ?>
@@ -64,6 +62,7 @@ $t = static fn (string $key, string $default) => trim((string) cm_field($key)) !
                 <li class="carousel__slide" role="group" aria-roledescription="slide" aria-label="1 of 1">
                     <div class="container container--wide hero__inner">
                         <div class="hero__text">
+                            <h1 id="hero-heading" class="hero__kicker"><?php echo esc_html($t('home_kicker', 'Children’s author and illustrator in Bath')); ?></h1>
                             <p class="hero__label"><?php echo esc_html($t('home_latest_label', 'Latest book')); ?></p>
                             <h2 class="hero__title">Happiness</h2>
                             <p class="hero__blurb"><?php esc_html_e('Join Coco Marshmallow on a gentle adventure to discover what happiness feels like, with a fun mindfulness activity inside and free colouring sheets.', 'cocomarshmallow'); ?></p>

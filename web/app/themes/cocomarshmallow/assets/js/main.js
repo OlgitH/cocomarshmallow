@@ -106,39 +106,47 @@
   dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
 })();
 
-/* Homepage carousel: scroll-snap track with previous/next buttons and dots (no auto-play). */
+/* Homepage carousel: slides are moved by the buttons, dots, arrow keys or a horizontal swipe. The track never scrolls by itself,
+   so it cannot trap the page's vertical scrolling. No auto-play. */
 (function () {
   document.querySelectorAll('[data-carousel]').forEach(function (root) {
     var track = root.querySelector('.carousel__track');
     var slides = root.querySelectorAll('.carousel__slide');
     var dots = root.querySelectorAll('[data-carousel-dot]');
+    var hero = root.closest('.hero');
+    var current = 0;
     if (!track || slides.length < 2) return;
 
-    function index() { return Math.round(track.scrollLeft / track.clientWidth); }
-    function go(i) {
-      i = Math.max(0, Math.min(slides.length - 1, i));
-      track.scrollTo({ left: i * track.clientWidth });
-    }
-    var hero = root.closest('.hero');
-    function sync() {
-      var i = index();
-      var sw = slides[i] && slides[i].getAttribute('data-swatch');
+    function show(i, focusFirst) {
+      current = (i + slides.length) % slides.length;
+      track.scrollTo({ left: current * track.clientWidth });
+      dots.forEach(function (d, n) { if (n === current) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current'); });
+      slides.forEach(function (sl, n) { if (n === current) sl.removeAttribute('inert'); else sl.setAttribute('inert', ''); });
+      var sw = slides[current].getAttribute('data-swatch');
       if (hero && sw) {
         Array.prototype.filter.call(hero.classList, function (c) { return c.indexOf('swatch--') === 0; }).forEach(function (c) { hero.classList.remove(c); });
         sw.split(' ').forEach(function (c) { if (c) hero.classList.add(c); });
       }
-      dots.forEach(function (d, n) { if (n === i) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current'); });
     }
     var prev = root.querySelector('[data-carousel-prev]');
     var next = root.querySelector('[data-carousel-next]');
-    if (prev) prev.addEventListener('click', function () { go(index() === 0 ? slides.length - 1 : index() - 1); });
-    if (next) next.addEventListener('click', function () { go(index() === slides.length - 1 ? 0 : index() + 1); });
-    dots.forEach(function (d) { d.addEventListener('click', function () { go(Number(d.getAttribute('data-carousel-dot'))); }); });
-    track.addEventListener('scroll', function () { window.requestAnimationFrame(sync); }, { passive: true });
-    track.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowRight') { go(index() + 1); }
-      if (e.key === 'ArrowLeft') { go(index() - 1); }
+    if (prev) prev.addEventListener('click', function () { show(current - 1); });
+    if (next) next.addEventListener('click', function () { show(current + 1); });
+    dots.forEach(function (d) { d.addEventListener('click', function () { show(Number(d.getAttribute('data-carousel-dot'))); }); });
+    root.addEventListener('keydown', function (e) {
+      if (e.target.closest('input, textarea, select')) return;
+      if (e.key === 'ArrowRight') show(current + 1);
+      if (e.key === 'ArrowLeft') show(current - 1);
     });
-    window.addEventListener('resize', function () { go(index()); });
+
+    // Swipe: only a clearly horizontal gesture changes slide; vertical gestures scroll the page as normal.
+    var x0 = 0, y0 = 0;
+    track.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+    track.addEventListener('touchend', function (e) {
+      var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) show(current + (dx < 0 ? 1 : -1));
+    }, { passive: true });
+    window.addEventListener('resize', function () { track.scrollTo({ left: current * track.clientWidth, behavior: 'instant' }); });
+    show(0);
   });
 })();

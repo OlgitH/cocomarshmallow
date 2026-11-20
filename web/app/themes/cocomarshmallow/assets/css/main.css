@@ -688,12 +688,11 @@ body:has(:is(.page-hero--pink, .hero--top).swatch--light) .cart-link__count { ba
 }
 
 /* ---- Homepage carousel ---------------------------------------------------- */
-.hero > .container > .hero__kicker { margin-bottom: 1.5rem; }
-.carousel__track { display: flex; margin: 0; padding: 0; list-style: none; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
-.carousel__track::-webkit-scrollbar { display: none; }
-.carousel__slide { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; display: flex; align-items: center; }
+.carousel { position: relative; }
+.carousel__track { display: flex; margin: 0; padding: 0; list-style: none; overflow: hidden; touch-action: pan-y pinch-zoom; } /* never scrolls by itself: moved by buttons/swipe only */
+.carousel__slide { flex: 0 0 100%; min-width: 0; display: flex; align-items: center; }
 .carousel__slide > .container { width: min(100% - 2 * var(--gutter), 74rem); }
-.carousel__controls { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 2rem; }
+.carousel__controls { position: absolute; left: 0; right: 0; bottom: 1.25rem; display: flex; align-items: center; justify-content: center; gap: 1rem; }
 .carousel__btn { width: 2.75rem; height: 2.75rem; border-radius: 50%; border: 2px solid var(--sw-fg, var(--white)); background: transparent; color: var(--sw-fg, var(--white)); font: 700 1.25rem/1 var(--font-serif); cursor: pointer; }
 .carousel__btn:hover { background: var(--sw-fg, var(--white)); color: var(--sw-bg, var(--pink-dark)); }
 .carousel__dots { display: flex; gap: 0.6rem; margin: 0; padding: 0; list-style: none; }
@@ -709,3 +708,10 @@ body:has(:is(.page-hero--pink, .hero--top).swatch--light) .cart-link__count { ba
 .hero { transition: background-color 0.3s; }
 .carousel__slide { background: var(--sw-bg, var(--pink)); color: var(--sw-fg, var(--white)); }
 @media (prefers-reduced-motion: reduce) { .hero { transition: none; } }
+
+/* Carousel hero: padding lives on each slide so every slide's colour fills the whole hero */
+.hero.hero--carousel { padding-block: 0 !important; }
+.hero--carousel .carousel__slide { padding-top: clamp(2.5rem, 6vw, 4.5rem); padding-bottom: 5.5rem; }
+.hero--carousel.hero--top .carousel__slide { padding-top: clamp(8rem, 12vw, 9.5rem); }
+.home-banner + .hero--carousel .carousel__slide { padding-top: calc(var(--tuck) + clamp(2.5rem, 6vw, 4.5rem)); }
+body.header-solid .hero--carousel.hero--top .carousel__slide { padding-top: 7rem; }
